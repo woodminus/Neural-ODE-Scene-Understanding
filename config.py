@@ -143,4 +143,30 @@ class ModelConfig(object):
                             help='Directory to save things to, such as checkpoints/save', default='', type=str)
 
         parser.add_argument('-ngpu', dest='num_gpus', help='cuantos GPUs tienes', type=int, default=3)
-        parser.add_argument('-nwork', dest='num_workers', help='num processes to
+        parser.add_argument('-nwork', dest='num_workers', help='num processes to use as workers', type=int, default=1)
+
+        parser.add_argument('-lr', dest='lr', help='learning rate', type=float, default=1e-3)
+
+        parser.add_argument('-b', dest='batch_size', help='batch size per GPU',type=int, default=2)
+        parser.add_argument('-val_size', dest='val_size', help='val size to use (if 0 we wont use val)', type=int, default=5000)
+
+        parser.add_argument('-l2', dest='l2', help='weight decay', type=float, default=1e-4)
+        parser.add_argument('-p', dest='print_interval', help='print during training', type=int,
+                            default=100)
+        parser.add_argument('-m', dest='mode', help='mode \in {sgdet, sgcls, predcls}', type=str,
+                            default='sgdet')
+
+        parser.add_argument('-old_feats', dest='old_feats', help='Use the original image features for the edges', action='store_true')
+        parser.add_argument('-order', dest='order', help='Linearization order for Rois (confidence -default, size, random)',
+                            type=str, default='confidence')
+        parser.add_argument('-cache', dest='cache', help='where should we cache predictions', type=str,
+                            default='')
+        parser.add_argument('-gt_box', dest='gt_box', help='use gt boxes during training', action='store_true')
+        parser.add_argument('-adam', dest='adam', help='use adam. Not recommended', action='store_true')
+        parser.add_argument('-test', dest='test', help='test set', action='store_true')
+        parser.add_argument('-multipred', dest='multi_pred', help='Allow multiple predicates per pair of box0, box1.', action='store_true')
+        parser.add_argument('-nepoch', dest='num_epochs', help='Number of epochs to train the model for',type=int, default=25)
+        parser.add_argument('-resnet', dest='use_resnet', help='use resnet instead of VGG', action='store_true')
+        parser.add_argument('-proposals', dest='use_proposals', help='Use Xu et als proposals', action='store_true')
+
+        return parser
