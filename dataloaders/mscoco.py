@@ -171,4 +171,20 @@ class CocoDataLoader(torch.utils.data.DataLoader):
             **kwargs,
         )
         val_load = cls(
- 
+            dataset=val_data,
+            batch_size=batch_size*num_gpus,
+            shuffle=False,
+            num_workers=num_workers,
+            collate_fn=lambda x: coco_collate(x, num_gpus=num_gpus, is_train=False),
+            drop_last=True,
+            # pin_memory=True,
+            **kwargs,
+        )
+        return train_load, val_load
+
+
+if __name__ == '__main__':
+    train, val = CocoDetection.splits()
+    gtbox = train[0]['gt_boxes']
+    img_size = train[0]['img_size']
+    anchor_strides, labels, bbox_targets = anchor_target_layer(gtbox, img_size)
