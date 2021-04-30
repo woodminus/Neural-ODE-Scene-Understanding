@@ -455,4 +455,104 @@ static CYTHON_INLINE void * PyThread_tss_get(Py_tss_t *key) {
   #define PyUnicode_2BYTE_KIND  2
   #define PyUnicode_4BYTE_KIND  4
   #define __Pyx_PyUnicode_READY(op)       (0)
-  #define __Pyx_PyUnicode_GET_LENGTH(u)   PyUnicode_GET
+  #define __Pyx_PyUnicode_GET_LENGTH(u)   PyUnicode_GET_SIZE(u)
+  #define __Pyx_PyUnicode_READ_CHAR(u, i) ((Py_UCS4)(PyUnicode_AS_UNICODE(u)[i]))
+  #define __Pyx_PyUnicode_MAX_CHAR_VALUE(u)   ((sizeof(Py_UNICODE) == 2) ? 65535 : 1114111)
+  #define __Pyx_PyUnicode_KIND(u)         (sizeof(Py_UNICODE))
+  #define __Pyx_PyUnicode_DATA(u)         ((void*)PyUnicode_AS_UNICODE(u))
+  #define __Pyx_PyUnicode_READ(k, d, i)   ((void)(k), (Py_UCS4)(((Py_UNICODE*)d)[i]))
+  #define __Pyx_PyUnicode_WRITE(k, d, i, ch)  (((void)(k)), ((Py_UNICODE*)d)[i] = ch)
+  #define __Pyx_PyUnicode_IS_TRUE(u)      (0 != PyUnicode_GET_SIZE(u))
+#endif
+#if CYTHON_COMPILING_IN_PYPY
+  #define __Pyx_PyUnicode_Concat(a, b)      PyNumber_Add(a, b)
+  #define __Pyx_PyUnicode_ConcatSafe(a, b)  PyNumber_Add(a, b)
+#else
+  #define __Pyx_PyUnicode_Concat(a, b)      PyUnicode_Concat(a, b)
+  #define __Pyx_PyUnicode_ConcatSafe(a, b)  ((unlikely((a) == Py_None) || unlikely((b) == Py_None)) ?\
+      PyNumber_Add(a, b) : __Pyx_PyUnicode_Concat(a, b))
+#endif
+#if CYTHON_COMPILING_IN_PYPY && !defined(PyUnicode_Contains)
+  #define PyUnicode_Contains(u, s)  PySequence_Contains(u, s)
+#endif
+#if CYTHON_COMPILING_IN_PYPY && !defined(PyByteArray_Check)
+  #define PyByteArray_Check(obj)  PyObject_TypeCheck(obj, &PyByteArray_Type)
+#endif
+#if CYTHON_COMPILING_IN_PYPY && !defined(PyObject_Format)
+  #define PyObject_Format(obj, fmt)  PyObject_CallMethod(obj, "__format__", "O", fmt)
+#endif
+#define __Pyx_PyString_FormatSafe(a, b)   ((unlikely((a) == Py_None || (PyString_Check(b) && !PyString_CheckExact(b)))) ? PyNumber_Remainder(a, b) : __Pyx_PyString_Format(a, b))
+#define __Pyx_PyUnicode_FormatSafe(a, b)  ((unlikely((a) == Py_None || (PyUnicode_Check(b) && !PyUnicode_CheckExact(b)))) ? PyNumber_Remainder(a, b) : PyUnicode_Format(a, b))
+#if PY_MAJOR_VERSION >= 3
+  #define __Pyx_PyString_Format(a, b)  PyUnicode_Format(a, b)
+#else
+  #define __Pyx_PyString_Format(a, b)  PyString_Format(a, b)
+#endif
+#if PY_MAJOR_VERSION < 3 && !defined(PyObject_ASCII)
+  #define PyObject_ASCII(o)            PyObject_Repr(o)
+#endif
+#if PY_MAJOR_VERSION >= 3
+  #define PyBaseString_Type            PyUnicode_Type
+  #define PyStringObject               PyUnicodeObject
+  #define PyString_Type                PyUnicode_Type
+  #define PyString_Check               PyUnicode_Check
+  #define PyString_CheckExact          PyUnicode_CheckExact
+  #define PyObject_Unicode             PyObject_Str
+#endif
+#if PY_MAJOR_VERSION >= 3
+  #define __Pyx_PyBaseString_Check(obj) PyUnicode_Check(obj)
+  #define __Pyx_PyBaseString_CheckExact(obj) PyUnicode_CheckExact(obj)
+#else
+  #define __Pyx_PyBaseString_Check(obj) (PyString_Check(obj) || PyUnicode_Check(obj))
+  #define __Pyx_PyBaseString_CheckExact(obj) (PyString_CheckExact(obj) || PyUnicode_CheckExact(obj))
+#endif
+#ifndef PySet_CheckExact
+  #define PySet_CheckExact(obj)        (Py_TYPE(obj) == &PySet_Type)
+#endif
+#if CYTHON_ASSUME_SAFE_MACROS
+  #define __Pyx_PySequence_SIZE(seq)  Py_SIZE(seq)
+#else
+  #define __Pyx_PySequence_SIZE(seq)  PySequence_Size(seq)
+#endif
+#if PY_MAJOR_VERSION >= 3
+  #define PyIntObject                  PyLongObject
+  #define PyInt_Type                   PyLong_Type
+  #define PyInt_Check(op)              PyLong_Check(op)
+  #define PyInt_CheckExact(op)         PyLong_CheckExact(op)
+  #define PyInt_FromString             PyLong_FromString
+  #define PyInt_FromUnicode            PyLong_FromUnicode
+  #define PyInt_FromLong               PyLong_FromLong
+  #define PyInt_FromSize_t             PyLong_FromSize_t
+  #define PyInt_FromSsize_t            PyLong_FromSsize_t
+  #define PyInt_AsLong                 PyLong_AsLong
+  #define PyInt_AS_LONG                PyLong_AS_LONG
+  #define PyInt_AsSsize_t              PyLong_AsSsize_t
+  #define PyInt_AsUnsignedLongMask     PyLong_AsUnsignedLongMask
+  #define PyInt_AsUnsignedLongLongMask PyLong_AsUnsignedLongLongMask
+  #define PyNumber_Int                 PyNumber_Long
+#endif
+#if PY_MAJOR_VERSION >= 3
+  #define PyBoolObject                 PyLongObject
+#endif
+#if PY_MAJOR_VERSION >= 3 && CYTHON_COMPILING_IN_PYPY
+  #ifndef PyUnicode_InternFromString
+    #define PyUnicode_InternFromString(s) PyUnicode_FromString(s)
+  #endif
+#endif
+#if PY_VERSION_HEX < 0x030200A4
+  typedef long Py_hash_t;
+  #define __Pyx_PyInt_FromHash_t PyInt_FromLong
+  #define __Pyx_PyInt_AsHash_t   PyInt_AsLong
+#else
+  #define __Pyx_PyInt_FromHash_t PyInt_FromSsize_t
+  #define __Pyx_PyInt_AsHash_t   PyInt_AsSsize_t
+#endif
+#if PY_MAJOR_VERSION >= 3
+  #define __Pyx_PyMethod_New(func, self, klass) ((self) ? PyMethod_New(func, self) : (Py_INCREF(func), func))
+#else
+  #define __Pyx_PyMethod_New(func, self, klass) PyMethod_New(func, self, klass)
+#endif
+#if CYTHON_USE_ASYNC_SLOTS
+  #if PY_VERSION_HEX >= 0x030500B1
+    #define __Pyx_PyAsyncMethodsStruct PyAsyncMethods
+    #define __Pyx_P
