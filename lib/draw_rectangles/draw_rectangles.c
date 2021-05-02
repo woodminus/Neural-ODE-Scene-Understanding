@@ -555,4 +555,126 @@ static CYTHON_INLINE void * PyThread_tss_get(Py_tss_t *key) {
 #if CYTHON_USE_ASYNC_SLOTS
   #if PY_VERSION_HEX >= 0x030500B1
     #define __Pyx_PyAsyncMethodsStruct PyAsyncMethods
-    #define __Pyx_P
+    #define __Pyx_PyType_AsAsync(obj) (Py_TYPE(obj)->tp_as_async)
+  #else
+    #define __Pyx_PyType_AsAsync(obj) ((__Pyx_PyAsyncMethodsStruct*) (Py_TYPE(obj)->tp_reserved))
+  #endif
+#else
+  #define __Pyx_PyType_AsAsync(obj) NULL
+#endif
+#ifndef __Pyx_PyAsyncMethodsStruct
+    typedef struct {
+        unaryfunc am_await;
+        unaryfunc am_aiter;
+        unaryfunc am_anext;
+    } __Pyx_PyAsyncMethodsStruct;
+#endif
+
+#if defined(WIN32) || defined(MS_WINDOWS)
+  #define _USE_MATH_DEFINES
+#endif
+#include <math.h>
+#ifdef NAN
+#define __PYX_NAN() ((float) NAN)
+#else
+static CYTHON_INLINE float __PYX_NAN() {
+  float value;
+  memset(&value, 0xFF, sizeof(value));
+  return value;
+}
+#endif
+#if defined(__CYGWIN__) && defined(_LDBL_EQ_DBL)
+#define __Pyx_truncl trunc
+#else
+#define __Pyx_truncl truncl
+#endif
+
+
+#define __PYX_ERR(f_index, lineno, Ln_error) \
+{ \
+  __pyx_filename = __pyx_f[f_index]; __pyx_lineno = lineno; __pyx_clineno = __LINE__; goto Ln_error; \
+}
+
+#ifndef __PYX_EXTERN_C
+  #ifdef __cplusplus
+    #define __PYX_EXTERN_C extern "C"
+  #else
+    #define __PYX_EXTERN_C extern
+  #endif
+#endif
+
+#define __PYX_HAVE__draw_rectangles
+#define __PYX_HAVE_API__draw_rectangles
+/* Early includes */
+#include <string.h>
+#include <stdio.h>
+#include "numpy/arrayobject.h"
+#include "numpy/ufuncobject.h"
+#ifdef _OPENMP
+#include <omp.h>
+#endif /* _OPENMP */
+
+#if defined(PYREX_WITHOUT_ASSERTIONS) && !defined(CYTHON_WITHOUT_ASSERTIONS)
+#define CYTHON_WITHOUT_ASSERTIONS
+#endif
+
+typedef struct {PyObject **p; const char *s; const Py_ssize_t n; const char* encoding;
+                const char is_unicode; const char is_str; const char intern; } __Pyx_StringTabEntry;
+
+#define __PYX_DEFAULT_STRING_ENCODING_IS_ASCII 0
+#define __PYX_DEFAULT_STRING_ENCODING_IS_UTF8 0
+#define __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT (PY_MAJOR_VERSION >= 3 && __PYX_DEFAULT_STRING_ENCODING_IS_UTF8)
+#define __PYX_DEFAULT_STRING_ENCODING ""
+#define __Pyx_PyObject_FromString __Pyx_PyBytes_FromString
+#define __Pyx_PyObject_FromStringAndSize __Pyx_PyBytes_FromStringAndSize
+#define __Pyx_uchar_cast(c) ((unsigned char)c)
+#define __Pyx_long_cast(x) ((long)x)
+#define __Pyx_fits_Py_ssize_t(v, type, is_signed)  (\
+    (sizeof(type) < sizeof(Py_ssize_t))  ||\
+    (sizeof(type) > sizeof(Py_ssize_t) &&\
+          likely(v < (type)PY_SSIZE_T_MAX ||\
+                 v == (type)PY_SSIZE_T_MAX)  &&\
+          (!is_signed || likely(v > (type)PY_SSIZE_T_MIN ||\
+                                v == (type)PY_SSIZE_T_MIN)))  ||\
+    (sizeof(type) == sizeof(Py_ssize_t) &&\
+          (is_signed || likely(v < (type)PY_SSIZE_T_MAX ||\
+                               v == (type)PY_SSIZE_T_MAX)))  )
+static CYTHON_INLINE int __Pyx_is_valid_index(Py_ssize_t i, Py_ssize_t limit) {
+    return (size_t) i < (size_t) limit;
+}
+#if defined (__cplusplus) && __cplusplus >= 201103L
+    #include <cstdlib>
+    #define __Pyx_sst_abs(value) std::abs(value)
+#elif SIZEOF_INT >= SIZEOF_SIZE_T
+    #define __Pyx_sst_abs(value) abs(value)
+#elif SIZEOF_LONG >= SIZEOF_SIZE_T
+    #define __Pyx_sst_abs(value) labs(value)
+#elif defined (_MSC_VER)
+    #define __Pyx_sst_abs(value) ((Py_ssize_t)_abs64(value))
+#elif defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+    #define __Pyx_sst_abs(value) llabs(value)
+#elif defined (__GNUC__)
+    #define __Pyx_sst_abs(value) __builtin_llabs(value)
+#else
+    #define __Pyx_sst_abs(value) ((value<0) ? -value : value)
+#endif
+static CYTHON_INLINE const char* __Pyx_PyObject_AsString(PyObject*);
+static CYTHON_INLINE const char* __Pyx_PyObject_AsStringAndSize(PyObject*, Py_ssize_t* length);
+#define __Pyx_PyByteArray_FromString(s) PyByteArray_FromStringAndSize((const char*)s, strlen((const char*)s))
+#define __Pyx_PyByteArray_FromStringAndSize(s, l) PyByteArray_FromStringAndSize((const char*)s, l)
+#define __Pyx_PyBytes_FromString        PyBytes_FromString
+#define __Pyx_PyBytes_FromStringAndSize PyBytes_FromStringAndSize
+static CYTHON_INLINE PyObject* __Pyx_PyUnicode_FromString(const char*);
+#if PY_MAJOR_VERSION < 3
+    #define __Pyx_PyStr_FromString        __Pyx_PyBytes_FromString
+    #define __Pyx_PyStr_FromStringAndSize __Pyx_PyBytes_FromStringAndSize
+#else
+    #define __Pyx_PyStr_FromString        __Pyx_PyUnicode_FromString
+    #define __Pyx_PyStr_FromStringAndSize __Pyx_PyUnicode_FromStringAndSize
+#endif
+#define __Pyx_PyBytes_AsWritableString(s)     ((char*) PyBytes_AS_STRING(s))
+#define __Pyx_PyBytes_AsWritableSString(s)    ((signed char*) PyBytes_AS_STRING(s))
+#define __Pyx_PyBytes_AsWritableUString(s)    ((unsigned char*) PyBytes_AS_STRING(s))
+#define __Pyx_PyBytes_AsString(s)     ((const char*) PyBytes_AS_STRING(s))
+#define __Pyx_PyBytes_AsSString(s)    ((const signed char*) PyBytes_AS_STRING(s))
+#define __Pyx_PyBytes_AsUString(s)    (
