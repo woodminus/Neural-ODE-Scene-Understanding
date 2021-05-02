@@ -677,4 +677,99 @@ static CYTHON_INLINE PyObject* __Pyx_PyUnicode_FromString(const char*);
 #define __Pyx_PyBytes_AsWritableUString(s)    ((unsigned char*) PyBytes_AS_STRING(s))
 #define __Pyx_PyBytes_AsString(s)     ((const char*) PyBytes_AS_STRING(s))
 #define __Pyx_PyBytes_AsSString(s)    ((const signed char*) PyBytes_AS_STRING(s))
-#define __Pyx_PyBytes_AsUString(s)    (
+#define __Pyx_PyBytes_AsUString(s)    ((const unsigned char*) PyBytes_AS_STRING(s))
+#define __Pyx_PyObject_AsWritableString(s)    ((char*) __Pyx_PyObject_AsString(s))
+#define __Pyx_PyObject_AsWritableSString(s)    ((signed char*) __Pyx_PyObject_AsString(s))
+#define __Pyx_PyObject_AsWritableUString(s)    ((unsigned char*) __Pyx_PyObject_AsString(s))
+#define __Pyx_PyObject_AsSString(s)    ((const signed char*) __Pyx_PyObject_AsString(s))
+#define __Pyx_PyObject_AsUString(s)    ((const unsigned char*) __Pyx_PyObject_AsString(s))
+#define __Pyx_PyObject_FromCString(s)  __Pyx_PyObject_FromString((const char*)s)
+#define __Pyx_PyBytes_FromCString(s)   __Pyx_PyBytes_FromString((const char*)s)
+#define __Pyx_PyByteArray_FromCString(s)   __Pyx_PyByteArray_FromString((const char*)s)
+#define __Pyx_PyStr_FromCString(s)     __Pyx_PyStr_FromString((const char*)s)
+#define __Pyx_PyUnicode_FromCString(s) __Pyx_PyUnicode_FromString((const char*)s)
+static CYTHON_INLINE size_t __Pyx_Py_UNICODE_strlen(const Py_UNICODE *u) {
+    const Py_UNICODE *u_end = u;
+    while (*u_end++) ;
+    return (size_t)(u_end - u - 1);
+}
+#define __Pyx_PyUnicode_FromUnicode(u)       PyUnicode_FromUnicode(u, __Pyx_Py_UNICODE_strlen(u))
+#define __Pyx_PyUnicode_FromUnicodeAndLength PyUnicode_FromUnicode
+#define __Pyx_PyUnicode_AsUnicode            PyUnicode_AsUnicode
+#define __Pyx_NewRef(obj) (Py_INCREF(obj), obj)
+#define __Pyx_Owned_Py_None(b) __Pyx_NewRef(Py_None)
+static CYTHON_INLINE PyObject * __Pyx_PyBool_FromLong(long b);
+static CYTHON_INLINE int __Pyx_PyObject_IsTrue(PyObject*);
+static CYTHON_INLINE int __Pyx_PyObject_IsTrueAndDecref(PyObject*);
+static CYTHON_INLINE PyObject* __Pyx_PyNumber_IntOrLong(PyObject* x);
+#define __Pyx_PySequence_Tuple(obj)\
+    (likely(PyTuple_CheckExact(obj)) ? __Pyx_NewRef(obj) : PySequence_Tuple(obj))
+static CYTHON_INLINE Py_ssize_t __Pyx_PyIndex_AsSsize_t(PyObject*);
+static CYTHON_INLINE PyObject * __Pyx_PyInt_FromSize_t(size_t);
+#if CYTHON_ASSUME_SAFE_MACROS
+#define __pyx_PyFloat_AsDouble(x) (PyFloat_CheckExact(x) ? PyFloat_AS_DOUBLE(x) : PyFloat_AsDouble(x))
+#else
+#define __pyx_PyFloat_AsDouble(x) PyFloat_AsDouble(x)
+#endif
+#define __pyx_PyFloat_AsFloat(x) ((float) __pyx_PyFloat_AsDouble(x))
+#if PY_MAJOR_VERSION >= 3
+#define __Pyx_PyNumber_Int(x) (PyLong_CheckExact(x) ? __Pyx_NewRef(x) : PyNumber_Long(x))
+#else
+#define __Pyx_PyNumber_Int(x) (PyInt_CheckExact(x) ? __Pyx_NewRef(x) : PyNumber_Int(x))
+#endif
+#define __Pyx_PyNumber_Float(x) (PyFloat_CheckExact(x) ? __Pyx_NewRef(x) : PyNumber_Float(x))
+#if PY_MAJOR_VERSION < 3 && __PYX_DEFAULT_STRING_ENCODING_IS_ASCII
+static int __Pyx_sys_getdefaultencoding_not_ascii;
+static int __Pyx_init_sys_getdefaultencoding_params(void) {
+    PyObject* sys;
+    PyObject* default_encoding = NULL;
+    PyObject* ascii_chars_u = NULL;
+    PyObject* ascii_chars_b = NULL;
+    const char* default_encoding_c;
+    sys = PyImport_ImportModule("sys");
+    if (!sys) goto bad;
+    default_encoding = PyObject_CallMethod(sys, (char*) "getdefaultencoding", NULL);
+    Py_DECREF(sys);
+    if (!default_encoding) goto bad;
+    default_encoding_c = PyBytes_AsString(default_encoding);
+    if (!default_encoding_c) goto bad;
+    if (strcmp(default_encoding_c, "ascii") == 0) {
+        __Pyx_sys_getdefaultencoding_not_ascii = 0;
+    } else {
+        char ascii_chars[128];
+        int c;
+        for (c = 0; c < 128; c++) {
+            ascii_chars[c] = c;
+        }
+        __Pyx_sys_getdefaultencoding_not_ascii = 1;
+        ascii_chars_u = PyUnicode_DecodeASCII(ascii_chars, 128, NULL);
+        if (!ascii_chars_u) goto bad;
+        ascii_chars_b = PyUnicode_AsEncodedString(ascii_chars_u, default_encoding_c, NULL);
+        if (!ascii_chars_b || !PyBytes_Check(ascii_chars_b) || memcmp(ascii_chars, PyBytes_AS_STRING(ascii_chars_b), 128) != 0) {
+            PyErr_Format(
+                PyExc_ValueError,
+                "This module compiled with c_string_encoding=ascii, but default encoding '%.200s' is not a superset of ascii.",
+                default_encoding_c);
+            goto bad;
+        }
+        Py_DECREF(ascii_chars_u);
+        Py_DECREF(ascii_chars_b);
+    }
+    Py_DECREF(default_encoding);
+    return 0;
+bad:
+    Py_XDECREF(default_encoding);
+    Py_XDECREF(ascii_chars_u);
+    Py_XDECREF(ascii_chars_b);
+    return -1;
+}
+#endif
+#if __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT && PY_MAJOR_VERSION >= 3
+#define __Pyx_PyUnicode_FromStringAndSize(c_str, size) PyUnicode_DecodeUTF8(c_str, size, NULL)
+#else
+#define __Pyx_PyUnicode_FromStringAndSize(c_str, size) PyUnicode_Decode(c_str, size, __PYX_DEFAULT_STRING_ENCODING, NULL)
+#if __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT
+static char* __PYX_DEFAULT_STRING_ENCODING;
+static int __Pyx_init_sys_getdefaultencoding_params(void) {
+    PyObject* sys;
+    PyObje
