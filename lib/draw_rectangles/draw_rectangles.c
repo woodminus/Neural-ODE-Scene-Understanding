@@ -1810,4 +1810,129 @@ static PyObject *__pyx_pw_15draw_rectangles_1draw_union_boxes(PyObject *__pyx_se
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pooling_size)) != 0)) kw_args--;
         else {
           __Pyx_RaiseArgtupleInvalid("draw_union_boxes", 0, 2, 3, 1); __PYX_ERR(0, 12, __pyx_L3_error)
-     
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_padding);
+          if (value) { values[2] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "draw_union_boxes") < 0)) __PYX_ERR(0, 12, __pyx_L3_error)
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_bbox_pairs = values[0];
+    __pyx_v_pooling_size = values[1];
+    __pyx_v_padding = values[2];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("draw_union_boxes", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 12, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("draw_rectangles.draw_union_boxes", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_15draw_rectangles_draw_union_boxes(__pyx_self, __pyx_v_bbox_pairs, __pyx_v_pooling_size, __pyx_v_padding);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_15draw_rectangles_draw_union_boxes(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_bbox_pairs, PyObject *__pyx_v_pooling_size, PyObject *__pyx_v_padding) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  unsigned int __pyx_t_3;
+  __Pyx_RefNannySetupContext("draw_union_boxes", 0);
+
+  /* "draw_rectangles.pyx":21
+ *     :return: [num_pairs, 2, pooling_size, pooling_size arr
+ *     """
+ *     assert padding == 0, "Padding>0 not supported yet"             # <<<<<<<<<<<<<<
+ *     return draw_union_boxes_c(bbox_pairs, pooling_size)
+ * 
+ */
+  #ifndef CYTHON_WITHOUT_ASSERTIONS
+  if (unlikely(!Py_OptimizeFlag)) {
+    __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_v_padding, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 21, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (unlikely(!__pyx_t_2)) {
+      PyErr_SetObject(PyExc_AssertionError, __pyx_kp_s_Padding_0_not_supported_yet);
+      __PYX_ERR(0, 21, __pyx_L1_error)
+    }
+  }
+  #endif
+
+  /* "draw_rectangles.pyx":22
+ *     """
+ *     assert padding == 0, "Padding>0 not supported yet"
+ *     return draw_union_boxes_c(bbox_pairs, pooling_size)             # <<<<<<<<<<<<<<
+ * 
+ * cdef DTYPE_t minmax(DTYPE_t x):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  if (!(likely(((__pyx_v_bbox_pairs) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_bbox_pairs, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_unsigned_int(__pyx_v_pooling_size); if (unlikely((__pyx_t_3 == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_15draw_rectangles_draw_union_boxes_c(((PyArrayObject *)__pyx_v_bbox_pairs), __pyx_t_3)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "draw_rectangles.pyx":12
+ * ctypedef np.float32_t DTYPE_t
+ * 
+ * def draw_union_boxes(bbox_pairs, pooling_size, padding=0):             # <<<<<<<<<<<<<<
+ *     """
+ *     Draws union boxes for the image.
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("draw_rectangles.draw_union_boxes", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "draw_rectangles.pyx":24
+ *     return draw_union_boxes_c(bbox_pairs, pooling_size)
+ * 
+ * cdef DTYPE_t minmax(DTYPE_t x):             # <<<<<<<<<<<<<<
+ *     return min(max(x, 0), 1)
+ * 
+ */
+
+static __pyx_t_15draw_rectangles_DTYPE_t __pyx_f_15draw_rectangles_minmax(__pyx_t_15draw_rectangles_DTYPE_t __pyx_v_x) {
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_r;
+  __Pyx_RefNannyDeclarations
+  long __pyx_t_1;
+  long __pyx_t_2;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_t_3;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_t_4;
+  __Pyx_RefNannySetupContext("minmax", 0);
+
+  /* "draw_rectangles.pyx":25
+ * 
+ * cdef DTYPE_t minmax(DTYPE_t x):
+ *     return min(max(x, 0), 1)             # <<<<<<<<<<<<<<
+ * 
+ * 
