@@ -1716,4 +1716,98 @@ static const char __pyx_k_unknown_dtype_code_in_numpy_pxd[] = "unknown dtype cod
 static const char __pyx_k_Format_string_allocated_too_shor[] = "Format string allocated too short, see comment in numpy.pxd";
 static const char __pyx_k_Non_native_byte_order_not_suppor[] = "Non-native byte order not supported";
 static const char __pyx_k_ndarray_is_not_Fortran_contiguou[] = "ndarray is not Fortran contiguous";
-static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath fa
+static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath failed to import";
+static const char __pyx_k_Format_string_allocated_too_shor_2[] = "Format string allocated too short.";
+static PyObject *__pyx_n_s_DTYPE;
+static PyObject *__pyx_kp_u_Format_string_allocated_too_shor;
+static PyObject *__pyx_kp_u_Format_string_allocated_too_shor_2;
+static PyObject *__pyx_n_s_ImportError;
+static PyObject *__pyx_kp_u_Non_native_byte_order_not_suppor;
+static PyObject *__pyx_kp_s_Padding_0_not_supported_yet;
+static PyObject *__pyx_n_s_RuntimeError;
+static PyObject *__pyx_n_s_ValueError;
+static PyObject *__pyx_n_s_bbox_pairs;
+static PyObject *__pyx_n_s_cline_in_traceback;
+static PyObject *__pyx_n_s_draw_rectangles;
+static PyObject *__pyx_kp_s_draw_rectangles_pyx;
+static PyObject *__pyx_n_s_draw_union_boxes;
+static PyObject *__pyx_n_s_dtype;
+static PyObject *__pyx_n_s_float32;
+static PyObject *__pyx_n_s_import;
+static PyObject *__pyx_n_s_main;
+static PyObject *__pyx_n_s_name;
+static PyObject *__pyx_kp_u_ndarray_is_not_C_contiguous;
+static PyObject *__pyx_kp_u_ndarray_is_not_Fortran_contiguou;
+static PyObject *__pyx_n_s_np;
+static PyObject *__pyx_n_s_numpy;
+static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
+static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
+static PyObject *__pyx_n_s_padding;
+static PyObject *__pyx_n_s_pooling_size;
+static PyObject *__pyx_n_s_range;
+static PyObject *__pyx_n_s_test;
+static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
+static PyObject *__pyx_n_s_zeros;
+static PyObject *__pyx_pf_15draw_rectangles_draw_union_boxes(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_bbox_pairs, PyObject *__pyx_v_pooling_size, PyObject *__pyx_v_padding); /* proto */
+static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
+static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
+static PyObject *__pyx_int_0;
+static PyObject *__pyx_int_2;
+static PyObject *__pyx_tuple_;
+static PyObject *__pyx_tuple__2;
+static PyObject *__pyx_tuple__3;
+static PyObject *__pyx_tuple__4;
+static PyObject *__pyx_tuple__5;
+static PyObject *__pyx_tuple__6;
+static PyObject *__pyx_tuple__7;
+static PyObject *__pyx_tuple__8;
+static PyObject *__pyx_codeobj__9;
+/* Late includes */
+
+/* "draw_rectangles.pyx":12
+ * ctypedef np.float32_t DTYPE_t
+ * 
+ * def draw_union_boxes(bbox_pairs, pooling_size, padding=0):             # <<<<<<<<<<<<<<
+ *     """
+ *     Draws union boxes for the image.
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_15draw_rectangles_1draw_union_boxes(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_15draw_rectangles_draw_union_boxes[] = "\n    Draws union boxes for the image.\n    :param box_pairs: [num_pairs, 8]\n    :param fmap_size: Size of the original feature map\n    :param stride: ratio between fmap size and original img (<1)\n    :param pooling_size: resize everything to this size\n    :return: [num_pairs, 2, pooling_size, pooling_size arr\n    ";
+static PyMethodDef __pyx_mdef_15draw_rectangles_1draw_union_boxes = {"draw_union_boxes", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_15draw_rectangles_1draw_union_boxes, METH_VARARGS|METH_KEYWORDS, __pyx_doc_15draw_rectangles_draw_union_boxes};
+static PyObject *__pyx_pw_15draw_rectangles_1draw_union_boxes(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_bbox_pairs = 0;
+  PyObject *__pyx_v_pooling_size = 0;
+  PyObject *__pyx_v_padding = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("draw_union_boxes (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_bbox_pairs,&__pyx_n_s_pooling_size,&__pyx_n_s_padding,0};
+    PyObject* values[3] = {0,0,0};
+    values[2] = ((PyObject *)__pyx_int_0);
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_bbox_pairs)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pooling_size)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("draw_union_boxes", 0, 2, 3, 1); __PYX_ERR(0, 12, __pyx_L3_error)
+     
