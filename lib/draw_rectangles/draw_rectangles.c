@@ -1935,4 +1935,138 @@ static __pyx_t_15draw_rectangles_DTYPE_t __pyx_f_15draw_rectangles_minmax(__pyx_
  * cdef DTYPE_t minmax(DTYPE_t x):
  *     return min(max(x, 0), 1)             # <<<<<<<<<<<<<<
  * 
+ * cdef np.ndarray[DTYPE_t, ndim=4] draw_union_boxes_c(
+ */
+  __pyx_t_1 = 1;
+  __pyx_t_2 = 0;
+  __pyx_t_3 = __pyx_v_x;
+  if (((__pyx_t_2 > __pyx_t_3) != 0)) {
+    __pyx_t_4 = __pyx_t_2;
+  } else {
+    __pyx_t_4 = __pyx_t_3;
+  }
+  __pyx_t_3 = __pyx_t_4;
+  if (((__pyx_t_1 < __pyx_t_3) != 0)) {
+    __pyx_t_4 = __pyx_t_1;
+  } else {
+    __pyx_t_4 = __pyx_t_3;
+  }
+  __pyx_r = __pyx_t_4;
+  goto __pyx_L0;
+
+  /* "draw_rectangles.pyx":24
+ *     return draw_union_boxes_c(bbox_pairs, pooling_size)
  * 
+ * cdef DTYPE_t minmax(DTYPE_t x):             # <<<<<<<<<<<<<<
+ *     return min(max(x, 0), 1)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "draw_rectangles.pyx":27
+ *     return min(max(x, 0), 1)
+ * 
+ * cdef np.ndarray[DTYPE_t, ndim=4] draw_union_boxes_c(             # <<<<<<<<<<<<<<
+ *         np.ndarray[DTYPE_t, ndim=2] box_pairs, unsigned int pooling_size):
+ *     """
+ */
+
+static PyArrayObject *__pyx_f_15draw_rectangles_draw_union_boxes_c(PyArrayObject *__pyx_v_box_pairs, unsigned int __pyx_v_pooling_size) {
+  unsigned int __pyx_v_N;
+  PyArrayObject *__pyx_v_uboxes = 0;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_x1_union;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_y1_union;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_x2_union;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_y2_union;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_w;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_h;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_x1_box;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_y1_box;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_x2_box;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_y2_box;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_y_contrib;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_v_x_contrib;
+  unsigned int __pyx_v_n;
+  unsigned int __pyx_v_i;
+  unsigned int __pyx_v_j;
+  unsigned int __pyx_v_k;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_box_pairs;
+  __Pyx_Buffer __pyx_pybuffer_box_pairs;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_uboxes;
+  __Pyx_Buffer __pyx_pybuffer_uboxes;
+  PyArrayObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyArrayObject *__pyx_t_6 = NULL;
+  unsigned int __pyx_t_7;
+  unsigned int __pyx_t_8;
+  unsigned int __pyx_t_9;
+  size_t __pyx_t_10;
+  Py_ssize_t __pyx_t_11;
+  int __pyx_t_12;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_t_13;
+  size_t __pyx_t_14;
+  Py_ssize_t __pyx_t_15;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_t_16;
+  __pyx_t_15draw_rectangles_DTYPE_t __pyx_t_17;
+  size_t __pyx_t_18;
+  Py_ssize_t __pyx_t_19;
+  size_t __pyx_t_20;
+  Py_ssize_t __pyx_t_21;
+  size_t __pyx_t_22;
+  Py_ssize_t __pyx_t_23;
+  size_t __pyx_t_24;
+  Py_ssize_t __pyx_t_25;
+  size_t __pyx_t_26;
+  Py_ssize_t __pyx_t_27;
+  size_t __pyx_t_28;
+  Py_ssize_t __pyx_t_29;
+  unsigned int __pyx_t_30;
+  size_t __pyx_t_31;
+  Py_ssize_t __pyx_t_32;
+  size_t __pyx_t_33;
+  Py_ssize_t __pyx_t_34;
+  size_t __pyx_t_35;
+  Py_ssize_t __pyx_t_36;
+  size_t __pyx_t_37;
+  Py_ssize_t __pyx_t_38;
+  unsigned int __pyx_t_39;
+  unsigned int __pyx_t_40;
+  unsigned int __pyx_t_41;
+  unsigned int __pyx_t_42;
+  unsigned int __pyx_t_43;
+  unsigned int __pyx_t_44;
+  size_t __pyx_t_45;
+  size_t __pyx_t_46;
+  size_t __pyx_t_47;
+  size_t __pyx_t_48;
+  __Pyx_RefNannySetupContext("draw_union_boxes_c", 0);
+  __pyx_pybuffer_uboxes.pybuffer.buf = NULL;
+  __pyx_pybuffer_uboxes.refcount = 0;
+  __pyx_pybuffernd_uboxes.data = NULL;
+  __pyx_pybuffernd_uboxes.rcbuffer = &__pyx_pybuffer_uboxes;
+  __pyx_pybuffer_box_pairs.pybuffer.buf = NULL;
+  __pyx_pybuffer_box_pairs.refcount = 0;
+  __pyx_pybuffernd_box_pairs.data = NULL;
+  __pyx_pybuffernd_box_pairs.rcbuffer = &__pyx_pybuffer_box_pairs;
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_box_pairs.rcbuffer->pybuffer, (PyObject*)__pyx_v_box_pairs, &__Pyx_TypeInfo_nn___pyx_t_15draw_rectangles_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_box_pairs.diminfo[0].strides = __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_box_pairs.diminfo[0].shape = __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_box_pairs.diminfo[1].strides = __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_box_pairs.diminfo[1].shape = __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.shape[1];
+
+  /* "draw_rectangles.pyx":38
+ *     overlaps: (N, K) ndarray of overlap between boxes and query_boxes
+ *     """
+ *     cdef unsigned int N = box_pairs.shape[0]             # <<<<<<<<<<<<<<
+ * 
+ *     cdef np.nda
