@@ -2069,4 +2069,95 @@ static PyArrayObject *__pyx_f_15draw_rectangles_draw_union_boxes_c(PyArrayObject
  *     """
  *     cdef unsigned int N = box_pairs.shape[0]             # <<<<<<<<<<<<<<
  * 
- *     cdef np.nda
+ *     cdef np.ndarray[DTYPE_t, ndim = 4] uboxes = np.zeros(
+ */
+  __pyx_v_N = (__pyx_v_box_pairs->dimensions[0]);
+
+  /* "draw_rectangles.pyx":40
+ *     cdef unsigned int N = box_pairs.shape[0]
+ * 
+ *     cdef np.ndarray[DTYPE_t, ndim = 4] uboxes = np.zeros(             # <<<<<<<<<<<<<<
+ *         (N, 2, pooling_size, pooling_size), dtype=DTYPE)
+ *     cdef DTYPE_t x1_union, y1_union, x2_union, y2_union, w, h, x1_box, y1_box, x2_box, y2_box, y_contrib, x_contrib
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "draw_rectangles.pyx":41
+ * 
+ *     cdef np.ndarray[DTYPE_t, ndim = 4] uboxes = np.zeros(
+ *         (N, 2, pooling_size, pooling_size), dtype=DTYPE)             # <<<<<<<<<<<<<<
+ *     cdef DTYPE_t x1_union, y1_union, x2_union, y2_union, w, h, x1_box, y1_box, x2_box, y2_box, y_contrib, x_contrib
+ *     cdef unsigned int n, i, j, k
+ */
+  __pyx_t_1 = __Pyx_PyInt_From_unsigned_int(__pyx_v_N); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = __Pyx_PyInt_From_unsigned_int(__pyx_v_pooling_size); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_PyInt_From_unsigned_int(__pyx_v_pooling_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = PyTuple_New(4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1);
+  __Pyx_INCREF(__pyx_int_2);
+  __Pyx_GIVEREF(__pyx_int_2);
+  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_int_2);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_5, 3, __pyx_t_4);
+  __pyx_t_1 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_4 = 0;
+
+  /* "draw_rectangles.pyx":40
+ *     cdef unsigned int N = box_pairs.shape[0]
+ * 
+ *     cdef np.ndarray[DTYPE_t, ndim = 4] uboxes = np.zeros(             # <<<<<<<<<<<<<<
+ *         (N, 2, pooling_size, pooling_size), dtype=DTYPE)
+ *     cdef DTYPE_t x1_union, y1_union, x2_union, y2_union, w, h, x1_box, y1_box, x2_box, y2_box, y_contrib, x_contrib
+ */
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "draw_rectangles.pyx":41
+ * 
+ *     cdef np.ndarray[DTYPE_t, ndim = 4] uboxes = np.zeros(
+ *         (N, 2, pooling_size, pooling_size), dtype=DTYPE)             # <<<<<<<<<<<<<<
+ *     cdef DTYPE_t x1_union, y1_union, x2_union, y2_union, w, h, x1_box, y1_box, x2_box, y2_box, y_contrib, x_contrib
+ *     cdef unsigned int n, i, j, k
+ */
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_3) < 0) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+  /* "draw_rectangles.pyx":40
+ *     cdef unsigned int N = box_pairs.shape[0]
+ * 
+ *     cdef np.ndarray[DTYPE_t, ndim = 4] uboxes = np.zeros(             # <<<<<<<<<<<<<<
+ *         (N, 2, pooling_size, pooling_size), dtype=DTYPE)
+ *     cdef DTYPE_t x1_union, y1_union, x2_union, y2_union, w, h, x1_box, y1_box, x2_box, y2_box, y_contrib, x_contrib
+ */
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_6 = ((PyArrayObject *)__pyx_t_3);
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_uboxes.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_15draw_rectangles_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 4, 0, __pyx_stack) == -1)) {
+      __pyx_v_uboxes = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_uboxes.rcbuffer->pybuffer.buf = NULL;
+      __PYX_ERR(0, 40, __pyx_L1_error)
+    } else {__pyx_pybuffernd_uboxes.diminfo[0].strides = __pyx_pybuffernd_uboxes.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_uboxes.diminfo[0].shape = __
