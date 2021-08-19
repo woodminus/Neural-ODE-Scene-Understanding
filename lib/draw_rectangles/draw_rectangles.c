@@ -2246,4 +2246,104 @@ static PyArrayObject *__pyx_f_15draw_rectangles_draw_union_boxes_c(PyArrayObject
     if (__pyx_t_21 < 0) {
       __pyx_t_21 += __pyx_pybuffernd_box_pairs.diminfo[1].shape;
       if (unlikely(__pyx_t_21 < 0)) __pyx_t_12 = 1;
-    } else if (unlikely(__pyx_t_21 >= __pyx_pybuffernd_box_pair
+    } else if (unlikely(__pyx_t_21 >= __pyx_pybuffernd_box_pairs.diminfo[1].shape)) __pyx_t_12 = 1;
+    if (unlikely(__pyx_t_12 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_12);
+      __PYX_ERR(0, 47, __pyx_L1_error)
+    }
+    __pyx_t_13 = (*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_box_pairs.diminfo[0].strides, __pyx_t_21, __pyx_pybuffernd_box_pairs.diminfo[1].strides));
+    if (((__pyx_t_17 < __pyx_t_13) != 0)) {
+      __pyx_t_16 = __pyx_t_17;
+    } else {
+      __pyx_t_16 = __pyx_t_13;
+    }
+    __pyx_v_y1_union = __pyx_t_16;
+
+    /* "draw_rectangles.pyx":48
+ *         x1_union = min(box_pairs[n, 0], box_pairs[n, 4])
+ *         y1_union = min(box_pairs[n, 1], box_pairs[n, 5])
+ *         x2_union = max(box_pairs[n, 2], box_pairs[n, 6])             # <<<<<<<<<<<<<<
+ *         y2_union = max(box_pairs[n, 3], box_pairs[n, 7])
+ * 
+ */
+    __pyx_t_22 = __pyx_v_n;
+    __pyx_t_23 = 6;
+    __pyx_t_12 = -1;
+    if (unlikely(__pyx_t_22 >= (size_t)__pyx_pybuffernd_box_pairs.diminfo[0].shape)) __pyx_t_12 = 0;
+    if (__pyx_t_23 < 0) {
+      __pyx_t_23 += __pyx_pybuffernd_box_pairs.diminfo[1].shape;
+      if (unlikely(__pyx_t_23 < 0)) __pyx_t_12 = 1;
+    } else if (unlikely(__pyx_t_23 >= __pyx_pybuffernd_box_pairs.diminfo[1].shape)) __pyx_t_12 = 1;
+    if (unlikely(__pyx_t_12 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_12);
+      __PYX_ERR(0, 48, __pyx_L1_error)
+    }
+    __pyx_t_16 = (*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_box_pairs.diminfo[0].strides, __pyx_t_23, __pyx_pybuffernd_box_pairs.diminfo[1].strides));
+    __pyx_t_24 = __pyx_v_n;
+    __pyx_t_25 = 2;
+    __pyx_t_12 = -1;
+    if (unlikely(__pyx_t_24 >= (size_t)__pyx_pybuffernd_box_pairs.diminfo[0].shape)) __pyx_t_12 = 0;
+    if (__pyx_t_25 < 0) {
+      __pyx_t_25 += __pyx_pybuffernd_box_pairs.diminfo[1].shape;
+      if (unlikely(__pyx_t_25 < 0)) __pyx_t_12 = 1;
+    } else if (unlikely(__pyx_t_25 >= __pyx_pybuffernd_box_pairs.diminfo[1].shape)) __pyx_t_12 = 1;
+    if (unlikely(__pyx_t_12 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_12);
+      __PYX_ERR(0, 48, __pyx_L1_error)
+    }
+    __pyx_t_17 = (*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_box_pairs.diminfo[0].strides, __pyx_t_25, __pyx_pybuffernd_box_pairs.diminfo[1].strides));
+    if (((__pyx_t_16 > __pyx_t_17) != 0)) {
+      __pyx_t_13 = __pyx_t_16;
+    } else {
+      __pyx_t_13 = __pyx_t_17;
+    }
+    __pyx_v_x2_union = __pyx_t_13;
+
+    /* "draw_rectangles.pyx":49
+ *         y1_union = min(box_pairs[n, 1], box_pairs[n, 5])
+ *         x2_union = max(box_pairs[n, 2], box_pairs[n, 6])
+ *         y2_union = max(box_pairs[n, 3], box_pairs[n, 7])             # <<<<<<<<<<<<<<
+ * 
+ *         w = x2_union - x1_union
+ */
+    __pyx_t_26 = __pyx_v_n;
+    __pyx_t_27 = 7;
+    __pyx_t_12 = -1;
+    if (unlikely(__pyx_t_26 >= (size_t)__pyx_pybuffernd_box_pairs.diminfo[0].shape)) __pyx_t_12 = 0;
+    if (__pyx_t_27 < 0) {
+      __pyx_t_27 += __pyx_pybuffernd_box_pairs.diminfo[1].shape;
+      if (unlikely(__pyx_t_27 < 0)) __pyx_t_12 = 1;
+    } else if (unlikely(__pyx_t_27 >= __pyx_pybuffernd_box_pairs.diminfo[1].shape)) __pyx_t_12 = 1;
+    if (unlikely(__pyx_t_12 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_12);
+      __PYX_ERR(0, 49, __pyx_L1_error)
+    }
+    __pyx_t_13 = (*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_26, __pyx_pybuffernd_box_pairs.diminfo[0].strides, __pyx_t_27, __pyx_pybuffernd_box_pairs.diminfo[1].strides));
+    __pyx_t_28 = __pyx_v_n;
+    __pyx_t_29 = 3;
+    __pyx_t_12 = -1;
+    if (unlikely(__pyx_t_28 >= (size_t)__pyx_pybuffernd_box_pairs.diminfo[0].shape)) __pyx_t_12 = 0;
+    if (__pyx_t_29 < 0) {
+      __pyx_t_29 += __pyx_pybuffernd_box_pairs.diminfo[1].shape;
+      if (unlikely(__pyx_t_29 < 0)) __pyx_t_12 = 1;
+    } else if (unlikely(__pyx_t_29 >= __pyx_pybuffernd_box_pairs.diminfo[1].shape)) __pyx_t_12 = 1;
+    if (unlikely(__pyx_t_12 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_12);
+      __PYX_ERR(0, 49, __pyx_L1_error)
+    }
+    __pyx_t_16 = (*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_28, __pyx_pybuffernd_box_pairs.diminfo[0].strides, __pyx_t_29, __pyx_pybuffernd_box_pairs.diminfo[1].strides));
+    if (((__pyx_t_13 > __pyx_t_16) != 0)) {
+      __pyx_t_17 = __pyx_t_13;
+    } else {
+      __pyx_t_17 = __pyx_t_16;
+    }
+    __pyx_v_y2_union = __pyx_t_17;
+
+    /* "draw_rectangles.pyx":51
+ *         y2_union = max(box_pairs[n, 3], box_pairs[n, 7])
+ * 
+ *         w = x2_union - x1_union             # <<<<<<<<<<<<<<
+ *         h = y2_union - y1_union
+ * 
+ */
+    __pyx_v_w = (__pyx_v_x2_u
