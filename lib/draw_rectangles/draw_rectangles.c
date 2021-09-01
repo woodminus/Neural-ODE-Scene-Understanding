@@ -2346,4 +2346,96 @@ static PyArrayObject *__pyx_f_15draw_rectangles_draw_union_boxes_c(PyArrayObject
  *         h = y2_union - y1_union
  * 
  */
-    __pyx_v_w = (__pyx_v_x2_u
+    __pyx_v_w = (__pyx_v_x2_union - __pyx_v_x1_union);
+
+    /* "draw_rectangles.pyx":52
+ * 
+ *         w = x2_union - x1_union
+ *         h = y2_union - y1_union             # <<<<<<<<<<<<<<
+ * 
+ *         for i in range(2):
+ */
+    __pyx_v_h = (__pyx_v_y2_union - __pyx_v_y1_union);
+
+    /* "draw_rectangles.pyx":54
+ *         h = y2_union - y1_union
+ * 
+ *         for i in range(2):             # <<<<<<<<<<<<<<
+ *             # Now everything is in the range [0, pooling_size].
+ *             x1_box = (box_pairs[n, 0+4*i] - x1_union)*pooling_size / w
+ */
+    for (__pyx_t_30 = 0; __pyx_t_30 < 2; __pyx_t_30+=1) {
+      __pyx_v_i = __pyx_t_30;
+
+      /* "draw_rectangles.pyx":56
+ *         for i in range(2):
+ *             # Now everything is in the range [0, pooling_size].
+ *             x1_box = (box_pairs[n, 0+4*i] - x1_union)*pooling_size / w             # <<<<<<<<<<<<<<
+ *             y1_box = (box_pairs[n, 1+4*i] - y1_union)*pooling_size / h
+ *             x2_box = (box_pairs[n, 2+4*i] - x1_union)*pooling_size / w
+ */
+      __pyx_t_31 = __pyx_v_n;
+      __pyx_t_32 = (0 + (4 * __pyx_v_i));
+      __pyx_t_12 = -1;
+      if (unlikely(__pyx_t_31 >= (size_t)__pyx_pybuffernd_box_pairs.diminfo[0].shape)) __pyx_t_12 = 0;
+      if (__pyx_t_32 < 0) {
+        __pyx_t_32 += __pyx_pybuffernd_box_pairs.diminfo[1].shape;
+        if (unlikely(__pyx_t_32 < 0)) __pyx_t_12 = 1;
+      } else if (unlikely(__pyx_t_32 >= __pyx_pybuffernd_box_pairs.diminfo[1].shape)) __pyx_t_12 = 1;
+      if (unlikely(__pyx_t_12 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_12);
+        __PYX_ERR(0, 56, __pyx_L1_error)
+      }
+      __pyx_t_17 = (((*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_31, __pyx_pybuffernd_box_pairs.diminfo[0].strides, __pyx_t_32, __pyx_pybuffernd_box_pairs.diminfo[1].strides)) - __pyx_v_x1_union) * __pyx_v_pooling_size);
+      if (unlikely(__pyx_v_w == 0)) {
+        PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+        __PYX_ERR(0, 56, __pyx_L1_error)
+      }
+      __pyx_v_x1_box = (__pyx_t_17 / __pyx_v_w);
+
+      /* "draw_rectangles.pyx":57
+ *             # Now everything is in the range [0, pooling_size].
+ *             x1_box = (box_pairs[n, 0+4*i] - x1_union)*pooling_size / w
+ *             y1_box = (box_pairs[n, 1+4*i] - y1_union)*pooling_size / h             # <<<<<<<<<<<<<<
+ *             x2_box = (box_pairs[n, 2+4*i] - x1_union)*pooling_size / w
+ *             y2_box = (box_pairs[n, 3+4*i] - y1_union)*pooling_size / h
+ */
+      __pyx_t_33 = __pyx_v_n;
+      __pyx_t_34 = (1 + (4 * __pyx_v_i));
+      __pyx_t_12 = -1;
+      if (unlikely(__pyx_t_33 >= (size_t)__pyx_pybuffernd_box_pairs.diminfo[0].shape)) __pyx_t_12 = 0;
+      if (__pyx_t_34 < 0) {
+        __pyx_t_34 += __pyx_pybuffernd_box_pairs.diminfo[1].shape;
+        if (unlikely(__pyx_t_34 < 0)) __pyx_t_12 = 1;
+      } else if (unlikely(__pyx_t_34 >= __pyx_pybuffernd_box_pairs.diminfo[1].shape)) __pyx_t_12 = 1;
+      if (unlikely(__pyx_t_12 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_12);
+        __PYX_ERR(0, 57, __pyx_L1_error)
+      }
+      __pyx_t_17 = (((*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_33, __pyx_pybuffernd_box_pairs.diminfo[0].strides, __pyx_t_34, __pyx_pybuffernd_box_pairs.diminfo[1].strides)) - __pyx_v_y1_union) * __pyx_v_pooling_size);
+      if (unlikely(__pyx_v_h == 0)) {
+        PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+        __PYX_ERR(0, 57, __pyx_L1_error)
+      }
+      __pyx_v_y1_box = (__pyx_t_17 / __pyx_v_h);
+
+      /* "draw_rectangles.pyx":58
+ *             x1_box = (box_pairs[n, 0+4*i] - x1_union)*pooling_size / w
+ *             y1_box = (box_pairs[n, 1+4*i] - y1_union)*pooling_size / h
+ *             x2_box = (box_pairs[n, 2+4*i] - x1_union)*pooling_size / w             # <<<<<<<<<<<<<<
+ *             y2_box = (box_pairs[n, 3+4*i] - y1_union)*pooling_size / h
+ *             # print("{:.3f}, {:.3f}, {:.3f}, {:.3f}".format(x1_box, y1_box, x2_box, y2_box))
+ */
+      __pyx_t_35 = __pyx_v_n;
+      __pyx_t_36 = (2 + (4 * __pyx_v_i));
+      __pyx_t_12 = -1;
+      if (unlikely(__pyx_t_35 >= (size_t)__pyx_pybuffernd_box_pairs.diminfo[0].shape)) __pyx_t_12 = 0;
+      if (__pyx_t_36 < 0) {
+        __pyx_t_36 += __pyx_pybuffernd_box_pairs.diminfo[1].shape;
+        if (unlikely(__pyx_t_36 < 0)) __pyx_t_12 = 1;
+      } else if (unlikely(__pyx_t_36 >= __pyx_pybuffernd_box_pairs.diminfo[1].shape)) __pyx_t_12 = 1;
+      if (unlikely(__pyx_t_12 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_12);
+        __PYX_ERR(0, 58, __pyx_L1_error)
+      }
+      __pyx_t_17 = (((*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_35, __pyx_
