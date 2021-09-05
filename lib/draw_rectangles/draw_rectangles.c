@@ -2525,4 +2525,120 @@ static PyArrayObject *__pyx_f_15draw_rectangles_draw_union_boxes_c(PyArrayObject
           __pyx_t_48 = __pyx_v_k;
           __pyx_t_12 = -1;
           if (unlikely(__pyx_t_45 >= (size_t)__pyx_pybuffernd_uboxes.diminfo[0].shape)) __pyx_t_12 = 0;
-          if (unlikely(__pyx_t_46 >= (size_t)__pyx_pybuffernd_uboxes.
+          if (unlikely(__pyx_t_46 >= (size_t)__pyx_pybuffernd_uboxes.diminfo[1].shape)) __pyx_t_12 = 1;
+          if (unlikely(__pyx_t_47 >= (size_t)__pyx_pybuffernd_uboxes.diminfo[2].shape)) __pyx_t_12 = 2;
+          if (unlikely(__pyx_t_48 >= (size_t)__pyx_pybuffernd_uboxes.diminfo[3].shape)) __pyx_t_12 = 3;
+          if (unlikely(__pyx_t_12 != -1)) {
+            __Pyx_RaiseBufferIndexError(__pyx_t_12);
+            __PYX_ERR(0, 66, __pyx_L1_error)
+          }
+          *__Pyx_BufPtrStrided4d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_uboxes.rcbuffer->pybuffer.buf, __pyx_t_45, __pyx_pybuffernd_uboxes.diminfo[0].strides, __pyx_t_46, __pyx_pybuffernd_uboxes.diminfo[1].strides, __pyx_t_47, __pyx_pybuffernd_uboxes.diminfo[2].strides, __pyx_t_48, __pyx_pybuffernd_uboxes.diminfo[3].strides) = (__pyx_v_x_contrib * __pyx_v_y_contrib);
+        }
+      }
+    }
+  }
+
+  /* "draw_rectangles.pyx":67
+ *                     # print("j {} yc {} k {} xc {}".format(j, y_contrib, k, x_contrib))
+ *                     uboxes[n,i,j,k] = x_contrib*y_contrib
+ *     return uboxes             # <<<<<<<<<<<<<<
+ */
+  __Pyx_XDECREF(((PyObject *)__pyx_r));
+  __Pyx_INCREF(((PyObject *)__pyx_v_uboxes));
+  __pyx_r = ((PyArrayObject *)__pyx_v_uboxes);
+  goto __pyx_L0;
+
+  /* "draw_rectangles.pyx":27
+ *     return min(max(x, 0), 1)
+ * 
+ * cdef np.ndarray[DTYPE_t, ndim=4] draw_union_boxes_c(             # <<<<<<<<<<<<<<
+ *         np.ndarray[DTYPE_t, ndim=2] box_pairs, unsigned int pooling_size):
+ *     """
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_box_pairs.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_uboxes.rcbuffer->pybuffer);
+  __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
+  __Pyx_AddTraceback("draw_rectangles.draw_union_boxes_c", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  goto __pyx_L2;
+  __pyx_L0:;
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_box_pairs.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_uboxes.rcbuffer->pybuffer);
+  __pyx_L2:;
+  __Pyx_XDECREF((PyObject *)__pyx_v_uboxes);
+  __Pyx_XGIVEREF((PyObject *)__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":258
+ *         # experimental exception made for __getbuffer__ and __releasebuffer__
+ *         # -- the details of this may change.
+ *         def __getbuffer__(ndarray self, Py_buffer* info, int flags):             # <<<<<<<<<<<<<<
+ *             # This implementation of getbuffer is geared towards Cython
+ *             # requirements, and does not yet fulfill the PEP.
+ */
+
+/* Python wrapper */
+static CYTHON_UNUSED int __pyx_pw_5numpy_7ndarray_1__getbuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /*proto*/
+static CYTHON_UNUSED int __pyx_pw_5numpy_7ndarray_1__getbuffer__(PyObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__getbuffer__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_5numpy_7ndarray___getbuffer__(((PyArrayObject *)__pyx_v_self), ((Py_buffer *)__pyx_v_info), ((int)__pyx_v_flags));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags) {
+  int __pyx_v_i;
+  int __pyx_v_ndim;
+  int __pyx_v_endian_detector;
+  int __pyx_v_little_endian;
+  int __pyx_v_t;
+  char *__pyx_v_f;
+  PyArray_Descr *__pyx_v_descr = 0;
+  int __pyx_v_offset;
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  PyArray_Descr *__pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  char *__pyx_t_9;
+  if (__pyx_v_info == NULL) {
+    PyErr_SetString(PyExc_BufferError, "PyObject_GetBuffer: view==NULL argument is obsolete");
+    return -1;
+  }
+  __Pyx_RefNannySetupContext("__getbuffer__", 0);
+  __pyx_v_info->obj = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_GIVEREF(__pyx_v_info->obj);
+
+  /* "../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":265
+ * 
+ *             cdef int i, ndim
+ *             cdef int endian_detector = 1             # <<<<<<<<<<<<<<
+ *             cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)
+ * 
+ */
+  __pyx_v_endian_detector = 1;
+
+  /* "../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packag
