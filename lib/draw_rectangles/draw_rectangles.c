@@ -2438,4 +2438,91 @@ static PyArrayObject *__pyx_f_15draw_rectangles_draw_union_boxes_c(PyArrayObject
         __Pyx_RaiseBufferIndexError(__pyx_t_12);
         __PYX_ERR(0, 58, __pyx_L1_error)
       }
-      __pyx_t_17 = (((*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_35, __pyx_
+      __pyx_t_17 = (((*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_35, __pyx_pybuffernd_box_pairs.diminfo[0].strides, __pyx_t_36, __pyx_pybuffernd_box_pairs.diminfo[1].strides)) - __pyx_v_x1_union) * __pyx_v_pooling_size);
+      if (unlikely(__pyx_v_w == 0)) {
+        PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+        __PYX_ERR(0, 58, __pyx_L1_error)
+      }
+      __pyx_v_x2_box = (__pyx_t_17 / __pyx_v_w);
+
+      /* "draw_rectangles.pyx":59
+ *             y1_box = (box_pairs[n, 1+4*i] - y1_union)*pooling_size / h
+ *             x2_box = (box_pairs[n, 2+4*i] - x1_union)*pooling_size / w
+ *             y2_box = (box_pairs[n, 3+4*i] - y1_union)*pooling_size / h             # <<<<<<<<<<<<<<
+ *             # print("{:.3f}, {:.3f}, {:.3f}, {:.3f}".format(x1_box, y1_box, x2_box, y2_box))
+ *             for j in range(pooling_size):
+ */
+      __pyx_t_37 = __pyx_v_n;
+      __pyx_t_38 = (3 + (4 * __pyx_v_i));
+      __pyx_t_12 = -1;
+      if (unlikely(__pyx_t_37 >= (size_t)__pyx_pybuffernd_box_pairs.diminfo[0].shape)) __pyx_t_12 = 0;
+      if (__pyx_t_38 < 0) {
+        __pyx_t_38 += __pyx_pybuffernd_box_pairs.diminfo[1].shape;
+        if (unlikely(__pyx_t_38 < 0)) __pyx_t_12 = 1;
+      } else if (unlikely(__pyx_t_38 >= __pyx_pybuffernd_box_pairs.diminfo[1].shape)) __pyx_t_12 = 1;
+      if (unlikely(__pyx_t_12 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_12);
+        __PYX_ERR(0, 59, __pyx_L1_error)
+      }
+      __pyx_t_17 = (((*__Pyx_BufPtrStrided2d(__pyx_t_15draw_rectangles_DTYPE_t *, __pyx_pybuffernd_box_pairs.rcbuffer->pybuffer.buf, __pyx_t_37, __pyx_pybuffernd_box_pairs.diminfo[0].strides, __pyx_t_38, __pyx_pybuffernd_box_pairs.diminfo[1].strides)) - __pyx_v_y1_union) * __pyx_v_pooling_size);
+      if (unlikely(__pyx_v_h == 0)) {
+        PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+        __PYX_ERR(0, 59, __pyx_L1_error)
+      }
+      __pyx_v_y2_box = (__pyx_t_17 / __pyx_v_h);
+
+      /* "draw_rectangles.pyx":61
+ *             y2_box = (box_pairs[n, 3+4*i] - y1_union)*pooling_size / h
+ *             # print("{:.3f}, {:.3f}, {:.3f}, {:.3f}".format(x1_box, y1_box, x2_box, y2_box))
+ *             for j in range(pooling_size):             # <<<<<<<<<<<<<<
+ *                 y_contrib = minmax(j+1-y1_box)*minmax(y2_box-j)
+ *                 for k in range(pooling_size):
+ */
+      __pyx_t_39 = __pyx_v_pooling_size;
+      __pyx_t_40 = __pyx_t_39;
+      for (__pyx_t_41 = 0; __pyx_t_41 < __pyx_t_40; __pyx_t_41+=1) {
+        __pyx_v_j = __pyx_t_41;
+
+        /* "draw_rectangles.pyx":62
+ *             # print("{:.3f}, {:.3f}, {:.3f}, {:.3f}".format(x1_box, y1_box, x2_box, y2_box))
+ *             for j in range(pooling_size):
+ *                 y_contrib = minmax(j+1-y1_box)*minmax(y2_box-j)             # <<<<<<<<<<<<<<
+ *                 for k in range(pooling_size):
+ *                     x_contrib = minmax(k+1-x1_box)*minmax(x2_box-k)
+ */
+        __pyx_v_y_contrib = (__pyx_f_15draw_rectangles_minmax(((__pyx_v_j + 1) - __pyx_v_y1_box)) * __pyx_f_15draw_rectangles_minmax((__pyx_v_y2_box - __pyx_v_j)));
+
+        /* "draw_rectangles.pyx":63
+ *             for j in range(pooling_size):
+ *                 y_contrib = minmax(j+1-y1_box)*minmax(y2_box-j)
+ *                 for k in range(pooling_size):             # <<<<<<<<<<<<<<
+ *                     x_contrib = minmax(k+1-x1_box)*minmax(x2_box-k)
+ *                     # print("j {} yc {} k {} xc {}".format(j, y_contrib, k, x_contrib))
+ */
+        __pyx_t_42 = __pyx_v_pooling_size;
+        __pyx_t_43 = __pyx_t_42;
+        for (__pyx_t_44 = 0; __pyx_t_44 < __pyx_t_43; __pyx_t_44+=1) {
+          __pyx_v_k = __pyx_t_44;
+
+          /* "draw_rectangles.pyx":64
+ *                 y_contrib = minmax(j+1-y1_box)*minmax(y2_box-j)
+ *                 for k in range(pooling_size):
+ *                     x_contrib = minmax(k+1-x1_box)*minmax(x2_box-k)             # <<<<<<<<<<<<<<
+ *                     # print("j {} yc {} k {} xc {}".format(j, y_contrib, k, x_contrib))
+ *                     uboxes[n,i,j,k] = x_contrib*y_contrib
+ */
+          __pyx_v_x_contrib = (__pyx_f_15draw_rectangles_minmax(((__pyx_v_k + 1) - __pyx_v_x1_box)) * __pyx_f_15draw_rectangles_minmax((__pyx_v_x2_box - __pyx_v_k)));
+
+          /* "draw_rectangles.pyx":66
+ *                     x_contrib = minmax(k+1-x1_box)*minmax(x2_box-k)
+ *                     # print("j {} yc {} k {} xc {}".format(j, y_contrib, k, x_contrib))
+ *                     uboxes[n,i,j,k] = x_contrib*y_contrib             # <<<<<<<<<<<<<<
+ *     return uboxes
+ */
+          __pyx_t_45 = __pyx_v_n;
+          __pyx_t_46 = __pyx_v_i;
+          __pyx_t_47 = __pyx_v_j;
+          __pyx_t_48 = __pyx_v_k;
+          __pyx_t_12 = -1;
+          if (unlikely(__pyx_t_45 >= (size_t)__pyx_pybuffernd_uboxes.diminfo[0].shape)) __pyx_t_12 = 0;
+          if (unlikely(__pyx_t_46 >= (size_t)__pyx_pybuffernd_uboxes.
