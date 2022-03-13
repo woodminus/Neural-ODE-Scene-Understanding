@@ -8555,4 +8555,157 @@ static CYTHON_INLINE int __Pyx_PyErr_GivenExceptionMatches2(PyObject *err, PyObj
         PyOS_snprintf(message, sizeof(message),
                       "compiletime version %s of module '%.100s' "
                       "does not match runtime version %s",
-          
+                      ctversion, __Pyx_MODULE_NAME, rtversion);
+        return PyErr_WarnEx(NULL, message, 1);
+    }
+    return 0;
+}
+
+/* InitStrings */
+  static int __Pyx_InitStrings(__Pyx_StringTabEntry *t) {
+    while (t->p) {
+        #if PY_MAJOR_VERSION < 3
+        if (t->is_unicode) {
+            *t->p = PyUnicode_DecodeUTF8(t->s, t->n - 1, NULL);
+        } else if (t->intern) {
+            *t->p = PyString_InternFromString(t->s);
+        } else {
+            *t->p = PyString_FromStringAndSize(t->s, t->n - 1);
+        }
+        #else
+        if (t->is_unicode | t->is_str) {
+            if (t->intern) {
+                *t->p = PyUnicode_InternFromString(t->s);
+            } else if (t->encoding) {
+                *t->p = PyUnicode_Decode(t->s, t->n - 1, t->encoding, NULL);
+            } else {
+                *t->p = PyUnicode_FromStringAndSize(t->s, t->n - 1);
+            }
+        } else {
+            *t->p = PyBytes_FromStringAndSize(t->s, t->n - 1);
+        }
+        #endif
+        if (!*t->p)
+            return -1;
+        if (PyObject_Hash(*t->p) == -1)
+            return -1;
+        ++t;
+    }
+    return 0;
+}
+
+static CYTHON_INLINE PyObject* __Pyx_PyUnicode_FromString(const char* c_str) {
+    return __Pyx_PyUnicode_FromStringAndSize(c_str, (Py_ssize_t)strlen(c_str));
+}
+static CYTHON_INLINE const char* __Pyx_PyObject_AsString(PyObject* o) {
+    Py_ssize_t ignore;
+    return __Pyx_PyObject_AsStringAndSize(o, &ignore);
+}
+#if __PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT
+#if !CYTHON_PEP393_ENABLED
+static const char* __Pyx_PyUnicode_AsStringAndSize(PyObject* o, Py_ssize_t *length) {
+    char* defenc_c;
+    PyObject* defenc = _PyUnicode_AsDefaultEncodedString(o, NULL);
+    if (!defenc) return NULL;
+    defenc_c = PyBytes_AS_STRING(defenc);
+#if __PYX_DEFAULT_STRING_ENCODING_IS_ASCII
+    {
+        char* end = defenc_c + PyBytes_GET_SIZE(defenc);
+        char* c;
+        for (c = defenc_c; c < end; c++) {
+            if ((unsigned char) (*c) >= 128) {
+                PyUnicode_AsASCIIString(o);
+                return NULL;
+            }
+        }
+    }
+#endif
+    *length = PyBytes_GET_SIZE(defenc);
+    return defenc_c;
+}
+#else
+static CYTHON_INLINE const char* __Pyx_PyUnicode_AsStringAndSize(PyObject* o, Py_ssize_t *length) {
+    if (unlikely(__Pyx_PyUnicode_READY(o) == -1)) return NULL;
+#if __PYX_DEFAULT_STRING_ENCODING_IS_ASCII
+    if (likely(PyUnicode_IS_ASCII(o))) {
+        *length = PyUnicode_GET_LENGTH(o);
+        return PyUnicode_AsUTF8(o);
+    } else {
+        PyUnicode_AsASCIIString(o);
+        return NULL;
+    }
+#else
+    return PyUnicode_AsUTF8AndSize(o, length);
+#endif
+}
+#endif
+#endif
+static CYTHON_INLINE const char* __Pyx_PyObject_AsStringAndSize(PyObject* o, Py_ssize_t *length) {
+#if __PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT
+    if (
+#if PY_MAJOR_VERSION < 3 && __PYX_DEFAULT_STRING_ENCODING_IS_ASCII
+            __Pyx_sys_getdefaultencoding_not_ascii &&
+#endif
+            PyUnicode_Check(o)) {
+        return __Pyx_PyUnicode_AsStringAndSize(o, length);
+    } else
+#endif
+#if (!CYTHON_COMPILING_IN_PYPY) || (defined(PyByteArray_AS_STRING) && defined(PyByteArray_GET_SIZE))
+    if (PyByteArray_Check(o)) {
+        *length = PyByteArray_GET_SIZE(o);
+        return PyByteArray_AS_STRING(o);
+    } else
+#endif
+    {
+        char* result;
+        int r = PyBytes_AsStringAndSize(o, &result, length);
+        if (unlikely(r < 0)) {
+            return NULL;
+        } else {
+            return result;
+        }
+    }
+}
+static CYTHON_INLINE int __Pyx_PyObject_IsTrue(PyObject* x) {
+   int is_true = x == Py_True;
+   if (is_true | (x == Py_False) | (x == Py_None)) return is_true;
+   else return PyObject_IsTrue(x);
+}
+static CYTHON_INLINE int __Pyx_PyObject_IsTrueAndDecref(PyObject* x) {
+    int retval;
+    if (unlikely(!x)) return -1;
+    retval = __Pyx_PyObject_IsTrue(x);
+    Py_DECREF(x);
+    return retval;
+}
+static PyObject* __Pyx_PyNumber_IntOrLongWrongResultType(PyObject* result, const char* type_name) {
+#if PY_MAJOR_VERSION >= 3
+    if (PyLong_Check(result)) {
+        if (PyErr_WarnFormat(PyExc_DeprecationWarning, 1,
+                "__int__ returned non-int (type %.200s).  "
+                "The ability to return an instance of a strict subclass of int "
+                "is deprecated, and may be removed in a future version of Python.",
+                Py_TYPE(result)->tp_name)) {
+            Py_DECREF(result);
+            return NULL;
+        }
+        return result;
+    }
+#endif
+    PyErr_Format(PyExc_TypeError,
+                 "__%.4s__ returned non-%.4s (type %.200s)",
+                 type_name, type_name, Py_TYPE(result)->tp_name);
+    Py_DECREF(result);
+    return NULL;
+}
+static CYTHON_INLINE PyObject* __Pyx_PyNumber_IntOrLong(PyObject* x) {
+#if CYTHON_USE_TYPE_SLOTS
+  PyNumberMethods *m;
+#endif
+  const char *name = NULL;
+  PyObject *res = NULL;
+#if PY_MAJOR_VERSION < 3
+  if (likely(PyInt_Check(x) || PyLong_Check(x)))
+#else
+  if (likely(PyLong_Check(x)))
+#e
