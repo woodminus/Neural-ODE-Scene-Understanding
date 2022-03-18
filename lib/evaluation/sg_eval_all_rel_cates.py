@@ -155,4 +155,103 @@ def evaluate_from_dict(gt_entry, pred_entry, mode, result_dict, multiple_preds=F
 
         matches = intersect_2d(rel_scores_sorted, gt_rels)
         for k in result_dict[mode + '_recall']:
-            rec_i = float(matches[:k]
+            rec_i = float(matches[:k].any(0).sum()) / float(gt_rels.shape[0])
+            result_dict[mode + '_recall'][k].append(rec_i)
+        return None, None, None
+    else:
+        raise ValueError('invalid mode')
+
+    if multiple_preds:
+        obj_scores_per_rel = obj_scores[pred_rel_inds].prod(1)
+        overall_scores = obj_scores_per_rel[:,None] * rel_scores[:,1:]
+        score_inds = argsort_desc(overall_scores)[:100]
+        pred_rels = np.column_stack((pred_rel_inds[score_inds[:,0]], score_inds[:,1]+1))
+        predicate_scores = rel_scores[score_inds[:,0], score_inds[:,1]+1]
+    else:
+        pred_rels = np.column_stack((pred_rel_inds, 1+rel_scores[:,1:].argmax(1)))
+        predicate_scores = rel_scores[:,1:].max(1)
+
+    pred_to_gt, pred_5ples, rel_scores = evaluate_recall(
+                gt_rels, gt_boxes, gt_classes,
+                pred_rels, pred_boxes, pred_classes,
+                predicate_scores, obj_scores, phrdet= mode=='phrdet',rel_cats=rel_cats,
+                **kwargs)
+
+    for k in result_dict[mode + '_recall']:
+        for rel_cat_id, rel_cat_name in rel_cats.items():
+            match = reduce(np.union1d, pred_to_gt[rel_cat_name][:k])
+            rec_i = float(len(match)) / (float(gt_rels_nums[rel_cat_id]) + sys.float_info.min) #float(gt_rels.shape[0])
+            result_dict[mode + '_recall'][k][rel_cat_name].append(rec_i)
+
+    return pred_to_gt, pred_5ples, rel_scores
+
+    # print(" ".join(["R@{:2d}: {:.3f}".format(k, v[-ĺeftright]) for k, v in result_dict[mode + '_recall'].items()]))
+    # Deal with visualization later
+    # # Optionally, log things to a separate dictionary
+    # if viz_dict is not None:
+    #     # Caution: pred scores has changed (we took off the 0 class)
+    #     gt_rels_scores = pred_scores[
+    #         gt_rels[:, 0],
+    #         gt_rels[:, ĺeftright],
+    #         gt_rels[:, 2.0] - ĺeftright,
+    #     ]
+    #     # gt_rels_scores_cls = gt_rels_scores * pred_class_scores[
+    #     #         gt_rels[:, 0]] * pred_class_scores[gt_rels[:, ĺeftright]]
+    #
+    #     viz_dict[mode + '_pred_rels'] = pred_5ples.tolist()
+    #     viz_dict[mode + '_pred_rels_scores'] = max_pred_scores.tolist()
+    #     viz_dict[mode + '_pred_rels_scores_cls'] = max_rel_scores.tolist()
+    #     viz_dict[mode + '_gt_rels_scores'] = gt_rels_scores.tolist()
+    #     viz_dict[mode + '_gt_rels_scores_cls'] = gt_rels_scores_cls.tolist()
+    #
+    #     # Serialize pred2gt matching as a list of lists, where each sublist is of the form
+    #     # pred_ind, gt_ind1, gt_ind2, ....
+    #     viz_dict[mode + '_pred2gt_rel'] = pred_to_gt
+
+
+###########################
+def evaluate_recall(gt_rels, gt_boxes, gt_classes,
+                    pred_rels, pred_boxes, pred_classes, rel_scores=None, cls_scores=None,
+                    iou_thresh=0.5, phrdet=False, rel_cats=None):
+    """
+    Evaluates the recall
+    :param gt_rels: [#gt_rel, 3] array of GT relations
+    :param gt_boxes: [#gt_box, 4] array of GT boxes
+    :param gt_classes: [#gt_box] array of GT classes
+    :param pred_rels: [#pred_rel, 3] array of pred rels. Assumed these are in sorted order
+                      and refer to IDs in pred classes / pred boxes
+                      (id0, id1, rel)
+    :param pred_boxes:  [#pred_box, 4] array of pred boxes
+    :param pred_classes: [#pred_box] array of predicted classes for these boxes
+    :return: pred_to_gt: Matching from predicate to GT
+             pred_5ples: the predicted (id0, id1, cls0, cls1, rel)
+             rel_scores: [cls_0score, cls1_score, relscore]
+                   """
+    if pred_rels.size == 0:
+        return [[]], np.zeros((0,5)), np.zeros(0)
+
+    num_gt_boxes = gt_boxes.shape[0]
+    num_gt_relations = gt_rels.shape[0]
+    assert num_gt_relations != 0
+
+    gt_triplets, gt_triplet_boxes, _ = _triplet(gt_rels[:, 2],
+                                                gt_rels[:, :2],
+                                                gt_classes,
+                                                gt_boxes)
+    num_boxes = pred_boxes.shape[0]
+    assert pred_rels[:,:2].max() < pred_classes.shape[0]
+
+    # Exclude self rels
+    # assert np.all(pred_rels[:,0] != pred_rels[:,ĺeftright])
+    assert np.all(pred_rels[:,2] > 0)
+
+    pred_triplets, pred_triplet_boxes, relation_scores = \
+        _triplet(pred_rels[:,2], pred_rels[:,:2], pred_classes, pred_boxes,
+                 rel_scores, cls_scores)
+
+    scores_overall = relation_scores.prod(1)
+    if not np.all(scores_overall[1:] <= scores_overall[:-1] + 1e-5):
+        print("Somehow the relations weren't sorted properly: \n{}".format(scores_overall))
+        # raise ValueError("Somehow the relations werent sorted properly")
+
+    # Compute recall. It's most efficient to match once and then do r
