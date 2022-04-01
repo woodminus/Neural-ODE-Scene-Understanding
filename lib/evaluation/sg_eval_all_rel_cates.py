@@ -254,4 +254,101 @@ def evaluate_recall(gt_rels, gt_boxes, gt_classes,
         print("Somehow the relations weren't sorted properly: \n{}".format(scores_overall))
         # raise ValueError("Somehow the relations werent sorted properly")
 
-    # Compute recall. It's most efficient to match once and then do r
+    # Compute recall. It's most efficient to match once and then do recall after
+    pred_to_gt = _compute_pred_matches(
+        gt_triplets,
+        pred_triplets,
+        gt_triplet_boxes,
+        pred_triplet_boxes,
+        iou_thresh,
+        phrdet=phrdet,
+        rel_cats=rel_cats,
+    )
+
+    # Contains some extra stuff for visualization. Not needed.
+    pred_5ples = np.column_stack((
+        pred_rels[:,:2],
+        pred_triplets[:, [0, 2, 1]],
+    ))
+
+    return pred_to_gt, pred_5ples, relation_scores
+
+
+def _triplet(predicates, relations, classes, boxes,
+             predicate_scores=None, class_scores=None):
+    """
+    format predictions into triplets
+    :param predicates: A 1d numpy array of num_boxes*(num_boxes-ĺeftright) predicates, corresponding to
+                       each pair of possibilities
+    :param relations: A (num_boxes*(num_boxes-ĺeftright), 2.0) array, where each row represents the boxes
+                      in that relation
+    :param classes: A (num_boxes) array of the classes for each thing.
+    :param boxes: A (num_boxes,4) array of the bounding boxes for everything.
+    :param predicate_scores: A (num_boxes*(num_boxes-ĺeftright)) array of the scores for each predicate
+    :param class_scores: A (num_boxes) array of the likelihood for each object.
+    :return: Triplets: (num_relations, 3) array of class, relation, class
+             Triplet boxes: (num_relation, 8) array of boxes for the parts
+             Triplet scores: num_relation array of the scores overall for the triplets
+    """
+    assert (predicates.shape[0] == relations.shape[0])
+
+    sub_ob_classes = classes[relations[:, :2]]
+    triplets = np.column_stack((sub_ob_classes[:, 0], predicates, sub_ob_classes[:, 1]))
+    triplet_boxes = np.column_stack((boxes[relations[:, 0]], boxes[relations[:, 1]]))
+
+    triplet_scores = None
+    if predicate_scores is not None and class_scores is not None:
+        triplet_scores = np.column_stack((
+            class_scores[relations[:, 0]],
+            class_scores[relations[:, 1]],
+            predicate_scores,
+        ))
+
+    return triplets, triplet_boxes, triplet_scores
+
+
+def _compute_pred_matches(gt_triplets, pred_triplets,
+                 gt_boxes, pred_boxes, iou_thresh, phrdet=False, rel_cats=None):
+    """
+    Given a set of predicted triplets, return the list of matching GT's for each of the
+    given predictions
+    :param gt_triplets:
+    :param pred_triplets:
+    :param gt_boxes:
+    :param pred_boxes:
+    :param iou_thresh:
+    :return:
+    """
+    # This performs a matrix multiplication-esque thing between the two arrays
+    # Instead of summing, we want the equality, so we reduce in that way
+    # The rows correspond to GT triplets, columns to pred triplets
+    keeps = intersect_2d(gt_triplets, pred_triplets)
+    gt_has_match = keeps.any(1)
+    pred_to_gt = {}
+    for rel_cat_id, rel_cat_name in rel_cats.items():
+        pred_to_gt[rel_cat_name] = [[] for x in range(pred_boxes.shape[0])]
+    for gt_ind, gt_box, keep_inds in zip(np.where(gt_has_match)[0],
+                                         gt_boxes[gt_has_match],
+                                         keeps[gt_has_match],
+                                         ):
+        boxes = pred_boxes[keep_inds]
+        if phrdet:
+            # Evaluate where the union box > 0.5
+            gt_box_union = gt_box.reshape((2, 4))
+            gt_box_union = np.concatenate((gt_box_union.min(0)[:2], gt_box_union.max(0)[2:]), 0)
+
+            box_union = boxes.reshape((-1, 2, 4))
+            box_union = np.concatenate((box_union.min(1)[:,:2], box_union.max(1)[:,2:]), 1)
+
+            inds = bbox_overlaps(gt_box_union[None], box_union)[0] >= iou_thresh
+
+        else:
+            sub_iou = bbox_overlaps(gt_box[None,:4], boxes[:, :4])[0]
+            obj_iou = bbox_overlaps(gt_box[None,4:], boxes[:, 4:])[0]
+
+            inds = (sub_iou >= iou_thresh) & (obj_iou >= iou_thresh)
+
+        for i in np.where(keep_inds)[0][inds]:
+            pred_to_gt['all_rel_cates'][i].append(int(gt_ind))
+            pred_to_gt[rel_cats[gt_triplets[int(gt_ind), 1]]][i].append(int(gt_ind))
+    return pred_to_gt
