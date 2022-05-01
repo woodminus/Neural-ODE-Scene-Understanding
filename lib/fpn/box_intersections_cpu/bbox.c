@@ -1028,4 +1028,144 @@ typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
 /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":808
  * ctypedef npy_ulonglong  ulonglong_t
  * 
- * ctypedef npy_intp       intp_t       
+ * ctypedef npy_intp       intp_t             # <<<<<<<<<<<<<<
+ * ctypedef npy_uintp      uintp_t
+ * 
+ */
+typedef npy_intp __pyx_t_5numpy_intp_t;
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":809
+ * 
+ * ctypedef npy_intp       intp_t
+ * ctypedef npy_uintp      uintp_t             # <<<<<<<<<<<<<<
+ * 
+ * ctypedef npy_double     float_t
+ */
+typedef npy_uintp __pyx_t_5numpy_uintp_t;
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":811
+ * ctypedef npy_uintp      uintp_t
+ * 
+ * ctypedef npy_double     float_t             # <<<<<<<<<<<<<<
+ * ctypedef npy_double     double_t
+ * ctypedef npy_longdouble longdouble_t
+ */
+typedef npy_double __pyx_t_5numpy_float_t;
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":812
+ * 
+ * ctypedef npy_double     float_t
+ * ctypedef npy_double     double_t             # <<<<<<<<<<<<<<
+ * ctypedef npy_longdouble longdouble_t
+ * 
+ */
+typedef npy_double __pyx_t_5numpy_double_t;
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":813
+ * ctypedef npy_double     float_t
+ * ctypedef npy_double     double_t
+ * ctypedef npy_longdouble longdouble_t             # <<<<<<<<<<<<<<
+ * 
+ * ctypedef npy_cfloat      cfloat_t
+ */
+typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
+
+/* "bbox.pyx":13
+ * 
+ * DTYPE = np.float
+ * ctypedef np.float_t DTYPE_t             # <<<<<<<<<<<<<<
+ * 
+ * def bbox_overlaps(boxes, query_boxes):
+ */
+typedef __pyx_t_5numpy_float_t __pyx_t_4bbox_DTYPE_t;
+/* Declarations.proto */
+#if CYTHON_CCOMPLEX
+  #ifdef __cplusplus
+    typedef ::std::complex< float > __pyx_t_float_complex;
+  #else
+    typedef float _Complex __pyx_t_float_complex;
+  #endif
+#else
+    typedef struct { float real, imag; } __pyx_t_float_complex;
+#endif
+static CYTHON_INLINE __pyx_t_float_complex __pyx_t_float_complex_from_parts(float, float);
+
+/* Declarations.proto */
+#if CYTHON_CCOMPLEX
+  #ifdef __cplusplus
+    typedef ::std::complex< double > __pyx_t_double_complex;
+  #else
+    typedef double _Complex __pyx_t_double_complex;
+  #endif
+#else
+    typedef struct { double real, imag; } __pyx_t_double_complex;
+#endif
+static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(double, double);
+
+
+/*--- Type declarations ---*/
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":815
+ * ctypedef npy_longdouble longdouble_t
+ * 
+ * ctypedef npy_cfloat      cfloat_t             # <<<<<<<<<<<<<<
+ * ctypedef npy_cdouble     cdouble_t
+ * ctypedef npy_clongdouble clongdouble_t
+ */
+typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":816
+ * 
+ * ctypedef npy_cfloat      cfloat_t
+ * ctypedef npy_cdouble     cdouble_t             # <<<<<<<<<<<<<<
+ * ctypedef npy_clongdouble clongdouble_t
+ * 
+ */
+typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":817
+ * ctypedef npy_cfloat      cfloat_t
+ * ctypedef npy_cdouble     cdouble_t
+ * ctypedef npy_clongdouble clongdouble_t             # <<<<<<<<<<<<<<
+ * 
+ * ctypedef npy_cdouble     complex_t
+ */
+typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":819
+ * ctypedef npy_clongdouble clongdouble_t
+ * 
+ * ctypedef npy_cdouble     complex_t             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline object PyArray_MultiIterNew1(a):
+ */
+typedef npy_cdouble __pyx_t_5numpy_complex_t;
+
+/* --- Runtime support code (head) --- */
+/* Refnanny.proto */
+#ifndef CYTHON_REFNANNY
+  #define CYTHON_REFNANNY 0
+#endif
+#if CYTHON_REFNANNY
+  typedef struct {
+    void (*INCREF)(void*, PyObject*, int);
+    void (*DECREF)(void*, PyObject*, int);
+    void (*GOTREF)(void*, PyObject*, int);
+    void (*GIVEREF)(void*, PyObject*, int);
+    void* (*SetupContext)(const char*, int, const char*);
+    void (*FinishContext)(void**);
+  } __Pyx_RefNannyAPIStruct;
+  static __Pyx_RefNannyAPIStruct *__Pyx_RefNanny = NULL;
+  static __Pyx_RefNannyAPIStruct *__Pyx_RefNannyImportAPI(const char *modname);
+  #define __Pyx_RefNannyDeclarations void *__pyx_refnanny = NULL;
+#ifdef WITH_THREAD
+  #define __Pyx_RefNannySetupContext(name, acquire_gil)\
+          if (acquire_gil) {\
+              PyGILState_STATE __pyx_gilstate_save = PyGILState_Ensure();\
+              __pyx_refnanny = __Pyx_RefNanny->SetupContext((name), __LINE__, __FILE__);\
+              PyGILState_Release(__pyx_gilstate_save);\
+          } else {\
+              __pyx_refnanny = __Pyx_RefNanny->SetupContext((name), __LINE__, __FILE__);\
+          }
+#else
+  #define _
