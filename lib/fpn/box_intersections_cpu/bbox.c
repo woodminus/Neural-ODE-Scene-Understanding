@@ -1899,4 +1899,101 @@ static PyObject *__pyx_pf_4bbox_bbox_overlaps(CYTHON_UNUSED PyObject *__pyx_self
     }
   }
   __pyx_t_5 = 0;
-  
+  __pyx_v_boxes_contig = ((PyArrayObject *)__pyx_t_4);
+  __pyx_t_4 = 0;
+
+  /* "bbox.pyx":17
+ * def bbox_overlaps(boxes, query_boxes):
+ *     cdef np.ndarray[DTYPE_t, ndim=2] boxes_contig = np.ascontiguousarray(boxes, dtype=DTYPE)
+ *     cdef np.ndarray[DTYPE_t, ndim=2] query_contig = np.ascontiguousarray(query_boxes, dtype=DTYPE)             # <<<<<<<<<<<<<<
+ * 
+ *     return bbox_overlaps_c(boxes_contig, query_contig)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_ascontiguousarray); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_INCREF(__pyx_v_query_boxes);
+  __Pyx_GIVEREF(__pyx_v_query_boxes);
+  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_query_boxes);
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_DTYPE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_6 = ((PyArrayObject *)__pyx_t_2);
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_query_contig.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_4bbox_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
+      __pyx_v_query_contig = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_query_contig.rcbuffer->pybuffer.buf = NULL;
+      __PYX_ERR(0, 17, __pyx_L1_error)
+    } else {__pyx_pybuffernd_query_contig.diminfo[0].strides = __pyx_pybuffernd_query_contig.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_query_contig.diminfo[0].shape = __pyx_pybuffernd_query_contig.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_query_contig.diminfo[1].strides = __pyx_pybuffernd_query_contig.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_query_contig.diminfo[1].shape = __pyx_pybuffernd_query_contig.rcbuffer->pybuffer.shape[1];
+    }
+  }
+  __pyx_t_6 = 0;
+  __pyx_v_query_contig = ((PyArrayObject *)__pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "bbox.pyx":19
+ *     cdef np.ndarray[DTYPE_t, ndim=2] query_contig = np.ascontiguousarray(query_boxes, dtype=DTYPE)
+ * 
+ *     return bbox_overlaps_c(boxes_contig, query_contig)             # <<<<<<<<<<<<<<
+ * 
+ * cdef np.ndarray[DTYPE_t, ndim=2] bbox_overlaps_c(
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2 = ((PyObject *)__pyx_f_4bbox_bbox_overlaps_c(((PyArrayObject *)__pyx_v_boxes_contig), ((PyArrayObject *)__pyx_v_query_contig))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "bbox.pyx":15
+ * ctypedef np.float_t DTYPE_t
+ * 
+ * def bbox_overlaps(boxes, query_boxes):             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[DTYPE_t, ndim=2] boxes_contig = np.ascontiguousarray(boxes, dtype=DTYPE)
+ *     cdef np.ndarray[DTYPE_t, ndim=2] query_contig = np.ascontiguousarray(query_boxes, dtype=DTYPE)
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_boxes_contig.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_query_contig.rcbuffer->pybuffer);
+  __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
+  __Pyx_AddTraceback("bbox.bbox_overlaps", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  goto __pyx_L2;
+  __pyx_L0:;
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_boxes_contig.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_query_contig.rcbuffer->pybuffer);
+  __pyx_L2:;
+  __Pyx_XDECREF((PyObject *)__pyx_v_boxes_contig);
+  __Pyx_XDECREF((PyObject *)__pyx_v_query_contig);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "bbox.pyx":21
+ *     return bbox_overlaps_c(boxes_contig, query_contig)
+ * 
+ * cdef n
