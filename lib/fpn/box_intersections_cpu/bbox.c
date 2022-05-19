@@ -1996,4 +1996,115 @@ static PyObject *__pyx_pf_4bbox_bbox_overlaps(CYTHON_UNUSED PyObject *__pyx_self
 /* "bbox.pyx":21
  *     return bbox_overlaps_c(boxes_contig, query_contig)
  * 
- * cdef n
+ * cdef np.ndarray[DTYPE_t, ndim=2] bbox_overlaps_c(             # <<<<<<<<<<<<<<
+ *         np.ndarray[DTYPE_t, ndim=2] boxes,
+ *         np.ndarray[DTYPE_t, ndim=2] query_boxes):
+ */
+
+static PyArrayObject *__pyx_f_4bbox_bbox_overlaps_c(PyArrayObject *__pyx_v_boxes, PyArrayObject *__pyx_v_query_boxes) {
+  unsigned int __pyx_v_N;
+  unsigned int __pyx_v_K;
+  PyArrayObject *__pyx_v_overlaps = 0;
+  __pyx_t_4bbox_DTYPE_t __pyx_v_iw;
+  __pyx_t_4bbox_DTYPE_t __pyx_v_ih;
+  __pyx_t_4bbox_DTYPE_t __pyx_v_box_area;
+  __pyx_t_4bbox_DTYPE_t __pyx_v_ua;
+  unsigned int __pyx_v_k;
+  unsigned int __pyx_v_n;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_boxes;
+  __Pyx_Buffer __pyx_pybuffer_boxes;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_overlaps;
+  __Pyx_Buffer __pyx_pybuffer_overlaps;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_query_boxes;
+  __Pyx_Buffer __pyx_pybuffer_query_boxes;
+  PyArrayObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyArrayObject *__pyx_t_5 = NULL;
+  unsigned int __pyx_t_6;
+  unsigned int __pyx_t_7;
+  unsigned int __pyx_t_8;
+  size_t __pyx_t_9;
+  Py_ssize_t __pyx_t_10;
+  int __pyx_t_11;
+  size_t __pyx_t_12;
+  Py_ssize_t __pyx_t_13;
+  size_t __pyx_t_14;
+  Py_ssize_t __pyx_t_15;
+  size_t __pyx_t_16;
+  Py_ssize_t __pyx_t_17;
+  unsigned int __pyx_t_18;
+  unsigned int __pyx_t_19;
+  unsigned int __pyx_t_20;
+  size_t __pyx_t_21;
+  Py_ssize_t __pyx_t_22;
+  __pyx_t_4bbox_DTYPE_t __pyx_t_23;
+  size_t __pyx_t_24;
+  Py_ssize_t __pyx_t_25;
+  __pyx_t_4bbox_DTYPE_t __pyx_t_26;
+  __pyx_t_4bbox_DTYPE_t __pyx_t_27;
+  size_t __pyx_t_28;
+  Py_ssize_t __pyx_t_29;
+  size_t __pyx_t_30;
+  Py_ssize_t __pyx_t_31;
+  __pyx_t_4bbox_DTYPE_t __pyx_t_32;
+  int __pyx_t_33;
+  size_t __pyx_t_34;
+  Py_ssize_t __pyx_t_35;
+  size_t __pyx_t_36;
+  Py_ssize_t __pyx_t_37;
+  size_t __pyx_t_38;
+  Py_ssize_t __pyx_t_39;
+  size_t __pyx_t_40;
+  Py_ssize_t __pyx_t_41;
+  size_t __pyx_t_42;
+  Py_ssize_t __pyx_t_43;
+  size_t __pyx_t_44;
+  Py_ssize_t __pyx_t_45;
+  size_t __pyx_t_46;
+  Py_ssize_t __pyx_t_47;
+  size_t __pyx_t_48;
+  Py_ssize_t __pyx_t_49;
+  size_t __pyx_t_50;
+  size_t __pyx_t_51;
+  __Pyx_RefNannySetupContext("bbox_overlaps_c", 0);
+  __pyx_pybuffer_overlaps.pybuffer.buf = NULL;
+  __pyx_pybuffer_overlaps.refcount = 0;
+  __pyx_pybuffernd_overlaps.data = NULL;
+  __pyx_pybuffernd_overlaps.rcbuffer = &__pyx_pybuffer_overlaps;
+  __pyx_pybuffer_boxes.pybuffer.buf = NULL;
+  __pyx_pybuffer_boxes.refcount = 0;
+  __pyx_pybuffernd_boxes.data = NULL;
+  __pyx_pybuffernd_boxes.rcbuffer = &__pyx_pybuffer_boxes;
+  __pyx_pybuffer_query_boxes.pybuffer.buf = NULL;
+  __pyx_pybuffer_query_boxes.refcount = 0;
+  __pyx_pybuffernd_query_boxes.data = NULL;
+  __pyx_pybuffernd_query_boxes.rcbuffer = &__pyx_pybuffer_query_boxes;
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_boxes.rcbuffer->pybuffer, (PyObject*)__pyx_v_boxes, &__Pyx_TypeInfo_nn___pyx_t_4bbox_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_boxes.diminfo[0].strides = __pyx_pybuffernd_boxes.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_boxes.diminfo[0].shape = __pyx_pybuffernd_boxes.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_boxes.diminfo[1].strides = __pyx_pybuffernd_boxes.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_boxes.diminfo[1].shape = __pyx_pybuffernd_boxes.rcbuffer->pybuffer.shape[1];
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_query_boxes.rcbuffer->pybuffer, (PyObject*)__pyx_v_query_boxes, &__Pyx_TypeInfo_nn___pyx_t_4bbox_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_query_boxes.diminfo[0].strides = __pyx_pybuffernd_query_boxes.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_query_boxes.diminfo[0].shape = __pyx_pybuffernd_query_boxes.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_query_boxes.diminfo[1].strides = __pyx_pybuffernd_query_boxes.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_query_boxes.diminfo[1].shape = __pyx_pybuffernd_query_boxes.rcbuffer->pybuffer.shape[1];
+
+  /* "bbox.pyx":33
+ *     overlaps: (N, K) ndarray of overlap between boxes and query_boxes
+ *     """
+ *     cdef unsigned int N = boxes.shape[0]             # <<<<<<<<<<<<<<
+ *     cdef unsigned int K = query_boxes.shape[0]
+ *     cdef np.ndarray[DTYPE_t, ndim=2] overlaps = np.zeros((N, K), dtype=DTYPE)
+ */
+  __pyx_v_N = (__pyx_v_boxes->dimensions[0]);
+
+  /* "bbox.pyx":34
+ *     """
+ *     cdef unsigned int N = boxes.shape[0]
+ *     cdef unsigned int K = query_boxes.shape[0]             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[DTYPE_t,
