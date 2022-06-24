@@ -3278,4 +3278,127 @@ static PyArrayObject *__pyx_f_4bbox_bbox_intersections_c(PyArrayObject *__pyx_v_
           __Pyx_RaiseBufferIndexError(__pyx_t_11);
           __PYX_ERR(0, 104, __pyx_L1_error)
         }
-        __pyx_t_27 = (*__Pyx_BufPtrStrided
+        __pyx_t_27 = (*__Pyx_BufPtrStrided2d(__pyx_t_4bbox_DTYPE_t *, __pyx_pybuffernd_boxes.rcbuffer->pybuffer.buf, __pyx_t_40, __pyx_pybuffernd_boxes.diminfo[0].strides, __pyx_t_41, __pyx_pybuffernd_boxes.diminfo[1].strides));
+        if (((__pyx_t_32 > __pyx_t_27) != 0)) {
+          __pyx_t_26 = __pyx_t_32;
+        } else {
+          __pyx_t_26 = __pyx_t_27;
+        }
+
+        /* "bbox.pyx":103
+ *             if iw > 0:
+ *                 ih = (
+ *                     min(boxes[n, 3], query_boxes[k, 3]) -             # <<<<<<<<<<<<<<
+ *                     max(boxes[n, 1], query_boxes[k, 1]) + 1
+ *                 )
+ */
+        __pyx_v_ih = ((__pyx_t_23 - __pyx_t_26) + 1.0);
+
+        /* "bbox.pyx":106
+ *                     max(boxes[n, 1], query_boxes[k, 1]) + 1
+ *                 )
+ *                 if ih > 0:             # <<<<<<<<<<<<<<
+ *                     intersec[n, k] = iw * ih / box_area
+ *     return intersec
+ */
+        __pyx_t_33 = ((__pyx_v_ih > 0.0) != 0);
+        if (__pyx_t_33) {
+
+          /* "bbox.pyx":107
+ *                 )
+ *                 if ih > 0:
+ *                     intersec[n, k] = iw * ih / box_area             # <<<<<<<<<<<<<<
+ *     return intersec
+ */
+          __pyx_t_26 = (__pyx_v_iw * __pyx_v_ih);
+          if (unlikely(__pyx_v_box_area == 0)) {
+            PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+            __PYX_ERR(0, 107, __pyx_L1_error)
+          }
+          __pyx_t_42 = __pyx_v_n;
+          __pyx_t_43 = __pyx_v_k;
+          __pyx_t_11 = -1;
+          if (unlikely(__pyx_t_42 >= (size_t)__pyx_pybuffernd_intersec.diminfo[0].shape)) __pyx_t_11 = 0;
+          if (unlikely(__pyx_t_43 >= (size_t)__pyx_pybuffernd_intersec.diminfo[1].shape)) __pyx_t_11 = 1;
+          if (unlikely(__pyx_t_11 != -1)) {
+            __Pyx_RaiseBufferIndexError(__pyx_t_11);
+            __PYX_ERR(0, 107, __pyx_L1_error)
+          }
+          *__Pyx_BufPtrStrided2d(__pyx_t_4bbox_DTYPE_t *, __pyx_pybuffernd_intersec.rcbuffer->pybuffer.buf, __pyx_t_42, __pyx_pybuffernd_intersec.diminfo[0].strides, __pyx_t_43, __pyx_pybuffernd_intersec.diminfo[1].strides) = (__pyx_t_26 / __pyx_v_box_area);
+
+          /* "bbox.pyx":106
+ *                     max(boxes[n, 1], query_boxes[k, 1]) + 1
+ *                 )
+ *                 if ih > 0:             # <<<<<<<<<<<<<<
+ *                     intersec[n, k] = iw * ih / box_area
+ *     return intersec
+ */
+        }
+
+        /* "bbox.pyx":101
+ *                 max(boxes[n, 0], query_boxes[k, 0]) + 1
+ *             )
+ *             if iw > 0:             # <<<<<<<<<<<<<<
+ *                 ih = (
+ *                     min(boxes[n, 3], query_boxes[k, 3]) -
+ */
+      }
+    }
+  }
+
+  /* "bbox.pyx":108
+ *                 if ih > 0:
+ *                     intersec[n, k] = iw * ih / box_area
+ *     return intersec             # <<<<<<<<<<<<<<
+ */
+  __Pyx_XDECREF(((PyObject *)__pyx_r));
+  __Pyx_INCREF(((PyObject *)__pyx_v_intersec));
+  __pyx_r = ((PyArrayObject *)__pyx_v_intersec);
+  goto __pyx_L0;
+
+  /* "bbox.pyx":71
+ * 
+ * 
+ * cdef np.ndarray[DTYPE_t, ndim=2] bbox_intersections_c(             # <<<<<<<<<<<<<<
+ *         np.ndarray[DTYPE_t, ndim=2] boxes,
+ *         np.ndarray[DTYPE_t, ndim=2] query_boxes):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_boxes.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_intersec.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_query_boxes.rcbuffer->pybuffer);
+  __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
+  __Pyx_AddTraceback("bbox.bbox_intersections_c", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  goto __pyx_L2;
+  __pyx_L0:;
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_boxes.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_intersec.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_query_boxes.rcbuffer->pybuffer);
+  __pyx_L2:;
+  __Pyx_XDECREF((PyObject *)__pyx_v_intersec);
+  __Pyx_XGIVEREF((PyObject *)__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":258
+ *         # experimental exception made for __getbuffer__ and __releasebuffer__
+ *         # -- the details of this may change.
+ *         def __getbuffer__(ndarray self, Py_buffer* info, int flags):             # <<<<<<<<<<<<<<
+ *             # This implementation of getbuffer is geared towards Cython
+ *             # requirements, and does not yet fulfill the PEP.
+ */
+
+/* Python wrapper */
+static CYTHON_UNUSED int __pyx_pw_5numpy_7ndarray_1__
