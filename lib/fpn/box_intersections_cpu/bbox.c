@@ -3918,4 +3918,113 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       case NPY_ULONG:
 
       /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":314
- *                 elif t == NPY_UINT:        f = "I
+ *                 elif t == NPY_UINT:        f = "I"
+ *                 elif t == NPY_LONG:        f = "l"
+ *                 elif t == NPY_ULONG:       f = "L"             # <<<<<<<<<<<<<<
+ *                 elif t == NPY_LONGLONG:    f = "q"
+ *                 elif t == NPY_ULONGLONG:   f = "Q"
+ */
+      __pyx_v_f = ((char *)"L");
+      break;
+      case NPY_LONGLONG:
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":315
+ *                 elif t == NPY_LONG:        f = "l"
+ *                 elif t == NPY_ULONG:       f = "L"
+ *                 elif t == NPY_LONGLONG:    f = "q"             # <<<<<<<<<<<<<<
+ *                 elif t == NPY_ULONGLONG:   f = "Q"
+ *                 elif t == NPY_FLOAT:       f = "f"
+ */
+      __pyx_v_f = ((char *)"q");
+      break;
+      case NPY_ULONGLONG:
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":316
+ *                 elif t == NPY_ULONG:       f = "L"
+ *                 elif t == NPY_LONGLONG:    f = "q"
+ *                 elif t == NPY_ULONGLONG:   f = "Q"             # <<<<<<<<<<<<<<
+ *                 elif t == NPY_FLOAT:       f = "f"
+ *                 elif t == NPY_DOUBLE:      f = "d"
+ */
+      __pyx_v_f = ((char *)"Q");
+      break;
+      case NPY_FLOAT:
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":317
+ *                 elif t == NPY_LONGLONG:    f = "q"
+ *                 elif t == NPY_ULONGLONG:   f = "Q"
+ *                 elif t == NPY_FLOAT:       f = "f"             # <<<<<<<<<<<<<<
+ *                 elif t == NPY_DOUBLE:      f = "d"
+ *                 elif t == NPY_LONGDOUBLE:  f = "g"
+ */
+      __pyx_v_f = ((char *)"f");
+      break;
+      case NPY_DOUBLE:
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":318
+ *                 elif t == NPY_ULONGLONG:   f = "Q"
+ *                 elif t == NPY_FLOAT:       f = "f"
+ *                 elif t == NPY_DOUBLE:      f = "d"             # <<<<<<<<<<<<<<
+ *                 elif t == NPY_LONGDOUBLE:  f = "g"
+ *                 elif t == NPY_CFLOAT:      f = "Zf"
+ */
+      __pyx_v_f = ((char *)"d");
+      break;
+      case NPY_LONGDOUBLE:
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":319
+ *                 elif t == NPY_FLOAT:       f = "f"
+ *                 elif t == NPY_DOUBLE:      f = "d"
+ *                 elif t == NPY_LONGDOUBLE:  f = "g"             # <<<<<<<<<<<<<<
+ *                 elif t == NPY_CFLOAT:      f = "Zf"
+ *                 elif t == NPY_CDOUBLE:     f = "Zd"
+ */
+      __pyx_v_f = ((char *)"g");
+      break;
+      case NPY_CFLOAT:
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":320
+ *                 elif t == NPY_DOUBLE:      f = "d"
+ *                 elif t == NPY_LONGDOUBLE:  f = "g"
+ *                 elif t == NPY_CFLOAT:      f = "Zf"             # <<<<<<<<<<<<<<
+ *                 elif t == NPY_CDOUBLE:     f = "Zd"
+ *                 elif t == NPY_CLONGDOUBLE: f = "Zg"
+ */
+      __pyx_v_f = ((char *)"Zf");
+      break;
+      case NPY_CDOUBLE:
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":321
+ *                 elif t == NPY_LONGDOUBLE:  f = "g"
+ *                 elif t == NPY_CFLOAT:      f = "Zf"
+ *                 elif t == NPY_CDOUBLE:     f = "Zd"             # <<<<<<<<<<<<<<
+ *                 elif t == NPY_CLONGDOUBLE: f = "Zg"
+ *                 elif t == NPY_OBJECT:      f = "O"
+ */
+      __pyx_v_f = ((char *)"Zd");
+      break;
+      case NPY_CLONGDOUBLE:
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":322
+ *                 elif t == NPY_CFLOAT:      f = "Zf"
+ *                 elif t == NPY_CDOUBLE:     f = "Zd"
+ *                 elif t == NPY_CLONGDOUBLE: f = "Zg"             # <<<<<<<<<<<<<<
+ *                 elif t == NPY_OBJECT:      f = "O"
+ *                 else:
+ */
+      __pyx_v_f = ((char *)"Zg");
+      break;
+      case NPY_OBJECT:
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":323
+ *                 elif t == NPY_CDOUBLE:     f = "Zd"
+ *                 elif t == NPY_CLONGDOUBLE: f = "Zg"
+ *                 elif t == NPY_OBJECT:      f = "O"             # <<<<<<<<<<<<<<
+ *                 else:
+ *                     raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
+ */
+      __pyx_v_f = ((char *)"O");
+      break;
+      default:
+
+      /* "
