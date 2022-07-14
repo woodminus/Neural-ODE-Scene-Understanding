@@ -4468,4 +4468,140 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
- *     return PyArray_MultiIterNew(5, <voi
+ *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("numpy.PyArray_MultiIterNew5", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":836
+ *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
+ * 
+ * cdef inline tuple PyDataType_SHAPE(dtype d):             # <<<<<<<<<<<<<<
+ *     if PyDataType_HASSUBARRAY(d):
+ *         return <tuple>d.subarray.shape
+ */
+
+static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__pyx_v_d) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  __Pyx_RefNannySetupContext("PyDataType_SHAPE", 0);
+
+  /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":837
+ * 
+ * cdef inline tuple PyDataType_SHAPE(dtype d):
+ *     if PyDataType_HASSUBARRAY(d):             # <<<<<<<<<<<<<<
+ *         return <tuple>d.subarray.shape
+ *     else:
+ */
+  __pyx_t_1 = (PyDataType_HASSUBARRAY(__pyx_v_d) != 0);
+  if (__pyx_t_1) {
+
+    /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":838
+ * cdef inline tuple PyDataType_SHAPE(dtype d):
+ *     if PyDataType_HASSUBARRAY(d):
+ *         return <tuple>d.subarray.shape             # <<<<<<<<<<<<<<
+ *     else:
+ *         return ()
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(((PyObject*)__pyx_v_d->subarray->shape));
+    __pyx_r = ((PyObject*)__pyx_v_d->subarray->shape);
+    goto __pyx_L0;
+
+    /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":837
+ * 
+ * cdef inline tuple PyDataType_SHAPE(dtype d):
+ *     if PyDataType_HASSUBARRAY(d):             # <<<<<<<<<<<<<<
+ *         return <tuple>d.subarray.shape
+ *     else:
+ */
+  }
+
+  /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":840
+ *         return <tuple>d.subarray.shape
+ *     else:
+ *         return ()             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline char* _util_dtypestring(dtype descr, char* f, char* end, int* offset) except NULL:
+ */
+  /*else*/ {
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_empty_tuple);
+    __pyx_r = __pyx_empty_tuple;
+    goto __pyx_L0;
+  }
+
+  /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":836
+ *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
+ * 
+ * cdef inline tuple PyDataType_SHAPE(dtype d):             # <<<<<<<<<<<<<<
+ *     if PyDataType_HASSUBARRAY(d):
+ *         return <tuple>d.subarray.shape
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":842
+ *         return ()
+ * 
+ * cdef inline char* _util_dtypestring(dtype descr, char* f, char* end, int* offset) except NULL:             # <<<<<<<<<<<<<<
+ *     # Recursive utility function used in __getbuffer__ to get format
+ *     # string. The new location in the format string is returned.
+ */
+
+static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx_v_descr, char *__pyx_v_f, char *__pyx_v_end, int *__pyx_v_offset) {
+  PyArray_Descr *__pyx_v_child = 0;
+  int __pyx_v_endian_detector;
+  int __pyx_v_little_endian;
+  PyObject *__pyx_v_fields = 0;
+  PyObject *__pyx_v_childname = NULL;
+  PyObject *__pyx_v_new_offset = NULL;
+  PyObject *__pyx_v_t = NULL;
+  char *__pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  Py_ssize_t __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  long __pyx_t_8;
+  char *__pyx_t_9;
+  __Pyx_RefNannySetupContext("_util_dtypestring", 0);
+
+  /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":847
+ * 
+ *     cdef dtype child
+ *     cdef int endian_detector = 1             # <<<<<<<<<<<<<<
+ *     cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)
+ *     cdef tuple fields
+ */
+  __pyx_v_endian_detector = 1;
+
+  /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":848
+ *     cdef dtype child
+ *     cdef int endian_detector = 1
+ *     cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)             # <<<<<<<<<<<<<<
+ *     cdef tuple fields
+ * 
+ */
+  __pyx_v_little_endian = ((((char *)(&__pyx_v_endian_detector))[0]) != 0);
+
+  /* "../../../../../anaconda3/tmp/envs/motifs4/lib/pytho
