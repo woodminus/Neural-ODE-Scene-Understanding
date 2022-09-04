@@ -5151,4 +5151,91 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
 
       /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":897
  *             elif t == NPY_LONGDOUBLE:  f[0] = 103 #"g"
- *             elif t == NPY_CFLOAT
+ *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf
+ *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd             # <<<<<<<<<<<<<<
+ *             elif t == NPY_CLONGDOUBLE: f[0] = 90; f[1] = 103; f += 1 # Zg
+ *             elif t == NPY_OBJECT:      f[0] = 79 #"O"
+ */
+      __pyx_t_4 = __Pyx_PyInt_From_enum__NPY_TYPES(NPY_CDOUBLE); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 897, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = PyObject_RichCompare(__pyx_v_t, __pyx_t_4, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 897, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(1, 897, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (__pyx_t_6) {
+        (__pyx_v_f[0]) = 90;
+        (__pyx_v_f[1]) = 0x64;
+        __pyx_v_f = (__pyx_v_f + 1);
+        goto __pyx_L15;
+      }
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":898
+ *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf
+ *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd
+ *             elif t == NPY_CLONGDOUBLE: f[0] = 90; f[1] = 103; f += 1 # Zg             # <<<<<<<<<<<<<<
+ *             elif t == NPY_OBJECT:      f[0] = 79 #"O"
+ *             else:
+ */
+      __pyx_t_3 = __Pyx_PyInt_From_enum__NPY_TYPES(NPY_CLONGDOUBLE); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 898, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = PyObject_RichCompare(__pyx_v_t, __pyx_t_3, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 898, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(1, 898, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (__pyx_t_6) {
+        (__pyx_v_f[0]) = 90;
+        (__pyx_v_f[1]) = 0x67;
+        __pyx_v_f = (__pyx_v_f + 1);
+        goto __pyx_L15;
+      }
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":899
+ *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd
+ *             elif t == NPY_CLONGDOUBLE: f[0] = 90; f[1] = 103; f += 1 # Zg
+ *             elif t == NPY_OBJECT:      f[0] = 79 #"O"             # <<<<<<<<<<<<<<
+ *             else:
+ *                 raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
+ */
+      __pyx_t_4 = __Pyx_PyInt_From_enum__NPY_TYPES(NPY_OBJECT); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 899, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = PyObject_RichCompare(__pyx_v_t, __pyx_t_4, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 899, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(1, 899, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (likely(__pyx_t_6)) {
+        (__pyx_v_f[0]) = 79;
+        goto __pyx_L15;
+      }
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":901
+ *             elif t == NPY_OBJECT:      f[0] = 79 #"O"
+ *             else:
+ *                 raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)             # <<<<<<<<<<<<<<
+ *             f += 1
+ *         else:
+ */
+      /*else*/ {
+        __pyx_t_3 = __Pyx_PyUnicode_FormatSafe(__pyx_kp_u_unknown_dtype_code_in_numpy_pxd, __pyx_v_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 901, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 901, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __Pyx_Raise(__pyx_t_4, 0, 0, 0);
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+        __PYX_ERR(1, 901, __pyx_L1_error)
+      }
+      __pyx_L15:;
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":902
+ *             else:
+ *                 raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
+ *             f += 1             # <<<<<<<<<<<<<<
+ *         else:
+ *             # Cython ignores struct boundary information ("T{...}"),
+ */
+      __pyx_v_f = (__pyx_v_f + 1);
+
+      /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":877
+ *         offset[0] += child.itemsize
+ * 
+ *         if not PyDataType_HASFIELDS(child)
