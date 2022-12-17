@@ -6181,4 +6181,111 @@ static CYTHON_SMALL_CODE PyObject* __pyx_pymod_create(PyObject *spec, CYTHON_UNU
         return NULL;
     if (__pyx_m)
         return __Pyx_NewRef(__pyx_m);
-    modna
+    modname = PyObject_GetAttrString(spec, "name");
+    if (unlikely(!modname)) goto bad;
+    module = PyModule_NewObject(modname);
+    Py_DECREF(modname);
+    if (unlikely(!module)) goto bad;
+    moddict = PyModule_GetDict(module);
+    if (unlikely(!moddict)) goto bad;
+    if (unlikely(__Pyx_copy_spec_to_module(spec, moddict, "loader", "__loader__", 1) < 0)) goto bad;
+    if (unlikely(__Pyx_copy_spec_to_module(spec, moddict, "origin", "__file__", 1) < 0)) goto bad;
+    if (unlikely(__Pyx_copy_spec_to_module(spec, moddict, "parent", "__package__", 1) < 0)) goto bad;
+    if (unlikely(__Pyx_copy_spec_to_module(spec, moddict, "submodule_search_locations", "__path__", 0) < 0)) goto bad;
+    return module;
+bad:
+    Py_XDECREF(module);
+    return NULL;
+}
+
+
+static CYTHON_SMALL_CODE int __pyx_pymod_exec_bbox(PyObject *__pyx_pyinit_module)
+#endif
+#endif
+{
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  __Pyx_RefNannyDeclarations
+  #if CYTHON_PEP489_MULTI_PHASE_INIT
+  if (__pyx_m) {
+    if (__pyx_m == __pyx_pyinit_module) return 0;
+    PyErr_SetString(PyExc_RuntimeError, "Module 'bbox' has already been imported. Re-initialisation is not supported.");
+    return -1;
+  }
+  #elif PY_MAJOR_VERSION >= 3
+  if (__pyx_m) return __Pyx_NewRef(__pyx_m);
+  #endif
+  #if CYTHON_REFNANNY
+__Pyx_RefNanny = __Pyx_RefNannyImportAPI("refnanny");
+if (!__Pyx_RefNanny) {
+  PyErr_Clear();
+  __Pyx_RefNanny = __Pyx_RefNannyImportAPI("Cython.Runtime.refnanny");
+  if (!__Pyx_RefNanny)
+      Py_FatalError("failed to import 'refnanny' module");
+}
+#endif
+  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_bbox(void)", 0);
+  if (__Pyx_check_binary_version() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  #ifdef __Pxy_PyFrame_Initialize_Offsets
+  __Pxy_PyFrame_Initialize_Offsets();
+  #endif
+  __pyx_empty_tuple = PyTuple_New(0); if (unlikely(!__pyx_empty_tuple)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_empty_bytes = PyBytes_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_bytes)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_empty_unicode = PyUnicode_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_unicode)) __PYX_ERR(0, 1, __pyx_L1_error)
+  #ifdef __Pyx_CyFunction_USED
+  if (__pyx_CyFunction_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  #endif
+  #ifdef __Pyx_FusedFunction_USED
+  if (__pyx_FusedFunction_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  #endif
+  #ifdef __Pyx_Coroutine_USED
+  if (__pyx_Coroutine_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  #endif
+  #ifdef __Pyx_Generator_USED
+  if (__pyx_Generator_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  #endif
+  #ifdef __Pyx_AsyncGen_USED
+  if (__pyx_AsyncGen_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  #endif
+  #ifdef __Pyx_StopAsyncIteration_USED
+  if (__pyx_StopAsyncIteration_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  #endif
+  /*--- Library function declarations ---*/
+  /*--- Threads initialization code ---*/
+  #if defined(__PYX_FORCE_INIT_THREADS) && __PYX_FORCE_INIT_THREADS
+  #ifdef WITH_THREAD /* Python build with threading support? */
+  PyEval_InitThreads();
+  #endif
+  #endif
+  /*--- Module creation code ---*/
+  #if CYTHON_PEP489_MULTI_PHASE_INIT
+  __pyx_m = __pyx_pyinit_module;
+  Py_INCREF(__pyx_m);
+  #else
+  #if PY_MAJOR_VERSION < 3
+  __pyx_m = Py_InitModule4("bbox", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  #else
+  __pyx_m = PyModule_Create(&__pyx_moduledef);
+  #endif
+  if (unlikely(!__pyx_m)) __PYX_ERR(0, 1, __pyx_L1_error)
+  #endif
+  __pyx_d = PyModule_GetDict(__pyx_m); if (unlikely(!__pyx_d)) __PYX_ERR(0, 1, __pyx_L1_error)
+  Py_INCREF(__pyx_d);
+  __pyx_b = PyImport_AddModule(__Pyx_BUILTIN_MODULE_NAME); if (unlikely(!__pyx_b)) __PYX_ERR(0, 1, __pyx_L1_error)
+  Py_INCREF(__pyx_b);
+  __pyx_cython_runtime = PyImport_AddModule((char *) "cython_runtime"); if (unlikely(!__pyx_cython_runtime)) __PYX_ERR(0, 1, __pyx_L1_error)
+  Py_INCREF(__pyx_cython_runtime);
+  if (PyObject_SetAttrString(__pyx_m, "__builtins__", __pyx_b) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  /*--- Initialize various global constants etc. ---*/
+  if (__Pyx_InitGlobals() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
+  if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  #endif
+  if (__pyx_module_is_main_bbox) {
+    if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  }
+  #if PY_MAJOR_VERSION >= 3
+  {
+    PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "bbox")) {
+      if (unlikely(PyDict_SetIt
