@@ -6288,4 +6288,132 @@ if (!__Pyx_RefNanny) {
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
     if (!PyDict_GetItemString(modules, "bbox")) {
-      if (unlikely(PyDict_SetIt
+      if (unlikely(PyDict_SetItemString(modules, "bbox", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    }
+  }
+  #endif
+  /*--- Builtin init code ---*/
+  if (__Pyx_InitCachedBuiltins() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  /*--- Constants init code ---*/
+  if (__Pyx_InitCachedConstants() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  /*--- Global type/function init code ---*/
+  (void)__Pyx_modinit_global_init_code();
+  (void)__Pyx_modinit_variable_export_code();
+  (void)__Pyx_modinit_function_export_code();
+  (void)__Pyx_modinit_type_init_code();
+  if (unlikely(__Pyx_modinit_type_import_code() != 0)) goto __pyx_L1_error;
+  (void)__Pyx_modinit_variable_import_code();
+  (void)__Pyx_modinit_function_import_code();
+  /*--- Execution code ---*/
+  #if defined(__Pyx_Generator_USED) || defined(__Pyx_Coroutine_USED)
+  if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  #endif
+
+  /* "bbox.pyx":9
+ * 
+ * cimport cython
+ * import numpy as np             # <<<<<<<<<<<<<<
+ * cimport numpy as np
+ * 
+ */
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "bbox.pyx":12
+ * cimport numpy as np
+ * 
+ * DTYPE = np.float             # <<<<<<<<<<<<<<
+ * ctypedef np.float_t DTYPE_t
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "bbox.pyx":15
+ * ctypedef np.float_t DTYPE_t
+ * 
+ * def bbox_overlaps(boxes, query_boxes):             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[DTYPE_t, ndim=2] boxes_contig = np.ascontiguousarray(boxes, dtype=DTYPE)
+ *     cdef np.ndarray[DTYPE_t, ndim=2] query_contig = np.ascontiguousarray(query_boxes, dtype=DTYPE)
+ */
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_4bbox_1bbox_overlaps, NULL, __pyx_n_s_bbox); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_bbox_overlaps, __pyx_t_2) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "bbox.pyx":64
+ * 
+ * 
+ * def bbox_intersections(boxes, query_boxes):             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[DTYPE_t, ndim=2] boxes_contig = np.ascontiguousarray(boxes, dtype=DTYPE)
+ *     cdef np.ndarray[DTYPE_t, ndim=2] query_contig = np.ascontiguousarray(query_boxes, dtype=DTYPE)
+ */
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_4bbox_3bbox_intersections, NULL, __pyx_n_s_bbox); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_bbox_intersections, __pyx_t_2) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "bbox.pyx":1
+ * # --------------------------------------------------------             # <<<<<<<<<<<<<<
+ * # Fast R-CNN
+ * # Copyright (c) 2015 Microsoft
+ */
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "../../../../../anaconda3/tmp/envs/motifs4/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1046
+ *         raise ImportError("numpy.core.umath failed to import")
+ * 
+ * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
+ *     try:
+ *         _import_umath()
+ */
+
+  /*--- Wrapped vars code ---*/
+
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  if (__pyx_m) {
+    if (__pyx_d) {
+      __Pyx_AddTraceback("init bbox", __pyx_clineno, __pyx_lineno, __pyx_filename);
+    }
+    Py_CLEAR(__pyx_m);
+  } else if (!PyErr_Occurred()) {
+    PyErr_SetString(PyExc_ImportError, "init bbox");
+  }
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  #if CYTHON_PEP489_MULTI_PHASE_INIT
+  return (__pyx_m != NULL) ? 0 : -1;
+  #elif PY_MAJOR_VERSION >= 3
+  return __pyx_m;
+  #else
+  return;
+  #endif
+}
+
+/* --- Runtime support code --- */
+/* Refnanny */
+#if CYTHON_REFNANNY
+static __Pyx_RefNannyAPIStruct *__Pyx_RefNannyImportAPI(const char *modname) {
+    PyObject *m = NULL, *p = NULL;
+    void *r = NULL;
+    m = PyImport_ImportModule(modname);
+    if (!m) goto end;
+    p = PyObject_GetAttrString(m, "RefNannyAPI");
+    if (!p) goto end;
+    r = PyLong_AsVoidPtr(p);
+end:
+    Py_XDECREF(p);
+    Py_XDECREF(m
