@@ -60,4 +60,40 @@ def proposal_assignments_gtbox(rois, gt_boxes, gt_classes, gt_rels, image_offset
     # NOW WE HAVE TO EXCLUDE THE FGs.
     # TODO: check if this causes an error if many duplicate GTs havent been filtered out
 
-    is_cand.view(-1)[fg
+    is_cand.view(-1)[fg_rels[:,1]*im_inds.size(0) + fg_rels[:,2]] = 0
+    is_bgcand = is_cand.nonzero()
+    # TODO: make this sample on a per image case
+    # If too many then sample
+    num_fg = min(fg_rels.size(0), int(RELS_PER_IMG * REL_FG_FRACTION * num_im))
+    if num_fg < fg_rels.size(0):
+        fg_rels = random_choose(fg_rels, num_fg)
+
+    # If too many then sample
+    num_bg = min(is_bgcand.size(0) if is_bgcand.dim() > 0 else 0,
+                 int(num_fg/2))
+
+
+    bg_rels = torch.cat((
+        im_inds[is_bgcand[:, 0]][:, None],
+        is_bgcand,
+        (is_bgcand[:, 0, None] < -10).long(),
+    ), 1)
+    rel_labels = fg_rels
+    for i,j in enumerate(bg_rel_length):
+        if bg_rels[bg_rels[:, 0] == i, :].shape[0] >= j:
+            bg_rel_per_image = random_choose(bg_rels[bg_rels[:, 0] == i, :], j)
+        else:
+            bg_rel_per_image = torch.cat((bg_rels[bg_rels[:, 0] == i, :],
+                                          random_choose(bg_rels[bg_rels[:, 0] == i, :], j-bg_rels[bg_rels[:, 0] == i, :].shape[0])), 0)
+        rel_labels = torch.cat((rel_labels, bg_rel_per_image), 0)
+
+
+    # last sort by rel.
+    _, perm = torch.sort(rel_labels[:, 0]*(gt_boxes.size(0)**2) +
+                         rel_labels[:,1]*gt_boxes.size(0) + rel_labels[:,2])
+
+    rel_labels = rel_labels[perm].contiguous()
+
+    labels = gt_classes[:,1].contiguous()
+
+    return rois, labels, rel_labels
