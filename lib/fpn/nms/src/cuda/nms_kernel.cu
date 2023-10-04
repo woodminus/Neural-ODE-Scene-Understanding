@@ -85,4 +85,48 @@ void _set_device(int device_id) {
   CUDA_CHECK(cudaSetDevice(device_id));
 }
 
-extern "C" int ApplyNMSGPU(int* keep_out, const float* boxes_dev, c
+extern "C" int ApplyNMSGPU(int* keep_out, const float* boxes_dev, const int boxes_num,
+          float nms_overlap_thresh, int device_id) {
+  _set_device(device_id);
+
+  unsigned long long* mask_dev = NULL;
+
+  const int col_blocks = DIVUP(boxes_num, threadsPerBlock);
+
+  CUDA_CHECK(cudaMalloc(&mask_dev,
+                        boxes_num * col_blocks * sizeof(unsigned long long)));
+
+  dim3 blocks(DIVUP(boxes_num, threadsPerBlock),
+              DIVUP(boxes_num, threadsPerBlock));
+  dim3 threads(threadsPerBlock);
+  nms_kernel<<<blocks, threads>>>(boxes_num,
+                                  nms_overlap_thresh,
+                                  boxes_dev,
+                                  mask_dev);
+
+  std::vector<unsigned long long> mask_host(boxes_num * col_blocks);
+  CUDA_CHECK(cudaMemcpy(&mask_host[0],
+                        mask_dev,
+                        sizeof(unsigned long long) * boxes_num * col_blocks,
+                        cudaMemcpyDeviceToHost));
+
+  std::vector<unsigned long long> remv(col_blocks);
+  memset(&remv[0], 0, sizeof(unsigned long long) * col_blocks);
+
+  int num_to_keep = 0;
+  for (int i = 0; i < boxes_num; i++) {
+    int nblock = i / threadsPerBlock;
+    int inblock = i % threadsPerBlock;
+
+    if (!(remv[nblock] & (1ULL << inblock))) {
+      keep_out[num_to_keep++] = i;
+      unsigned long long *p = &mask_host[0] + i * col_blocks;
+      for (int j = nblock; j < col_blocks; j++) {
+        remv[j] |= p[j];
+      }
+    }
+  }
+
+  CUDA_CHECK(cudaFree(mask_dev));
+  return num_to_keep;
+}
