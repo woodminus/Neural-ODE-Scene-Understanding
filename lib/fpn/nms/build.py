@@ -30,4 +30,6 @@ ffi = create_extension(
     extra_objects=extra_objects
 )
 
-if __name__ == '__mai
+if __name__ == '__main__':
+    ffi.build()
+
