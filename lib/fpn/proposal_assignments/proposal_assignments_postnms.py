@@ -86,4 +86,48 @@ def proposal_assignments_postnms(
 
         vals, first_occurance_ind = np.unique(obj_assignments_i, return_index=True)
         obj_assignments_i[np.setdiff1d(
-            np.arange(obj_assignments_i.shape[0])
+            np.arange(obj_assignments_i.shape[0]), first_occurance_ind)] = -1
+
+        extra_to_add = np.where(obj_assignments_i[n_chosen:] != -1)[0] + n_chosen
+
+        # Add them in somewhere at random
+        num_inds_to_have = min(max_objs, n_chosen + extra_to_add.shape[0])
+        boxes_i = np.zeros((num_inds_to_have, 4), dtype=np.float32)
+        labels_i = np.zeros(num_inds_to_have, dtype=np.int64)
+
+        inds_from_nms = np.sort(np.random.choice(num_inds_to_have, size=n_chosen, replace=False))
+        inds_from_elsewhere = np.setdiff1d(np.arange(num_inds_to_have), inds_from_nms)
+
+        boxes_i[inds_from_nms] = chosen_boxes_i
+        labels_i[inds_from_nms] = gt_classes_i[obj_assignments_i[:n_chosen]]
+
+        boxes_i[inds_from_elsewhere] = pred_boxes_i[extra_to_add]
+        labels_i[inds_from_elsewhere] = gt_classes_i[obj_assignments_i[extra_to_add]]
+
+        # Now, we do the relationships. same as for rle
+        all_rels_i = _sel_rels(bbox_overlaps(boxes_i, gt_boxes_i),
+                               boxes_i,
+                               labels_i,
+                               gt_classes_i,
+                               gt_rels_i,
+                               fg_thresh=fg_thresh,
+                               fg_rels_per_image=100)
+        all_rels_i[:,0:2] += num_box_seen
+
+        rois.append(np.column_stack((
+            im_ind * np.ones(boxes_i.shape[0], dtype=np.float32),
+            boxes_i,
+        )))
+        obj_labels.append(labels_i)
+        rel_labels.append(np.column_stack((
+            im_ind*np.ones(all_rels_i.shape[0], dtype=np.int64),
+            all_rels_i,
+        )))
+        num_box_seen += boxes_i.size
+
+    rois = torch.FloatTensor(np.concatenate(rois, 0)).cuda(gt_boxes.get_device(), async=True)
+    labels = torch.LongTensor(np.concatenate(obj_labels, 0)).cuda(gt_boxes.get_device(), async=True)
+    rel_labels = torch.LongTensor(np.concatenate(rel_labels, 0)).cuda(gt_boxes.get_device(),
+                                                                      async=True)
+
+    return rois, labels, rel_labels
