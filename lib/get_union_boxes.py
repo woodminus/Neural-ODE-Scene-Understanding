@@ -83,4 +83,16 @@ def union_boxes(fmap, rois, union_inds, pooling_size=14, stride=16):
     union boxes
     """
     assert union_inds.size(1) == 2
-    im_i
+    im_inds = rois[:,0][union_inds[:,0]]#?????????????
+    assert (im_inds.data == rois.data[:,0][union_inds[:,1]]).sum() == union_inds.size(0)
+    union_rois = torch.cat((
+        im_inds[:,None],
+        torch.min(rois[:, 1:3][union_inds[:, 0]], rois[:, 1:3][union_inds[:, 1]]),
+        torch.max(rois[:, 3:5][union_inds[:, 0]], rois[:, 3:5][union_inds[:, 1]]),
+    ),1)
+
+    # (num_rois, d, pooling_size, pooling_size)
+    union_pools = RoIAlignFunction(pooling_size, pooling_size,
+                                   spatial_scale=1/stride)(fmap, union_rois)
+    return union_pools, union_rois
+ 
