@@ -69,4 +69,29 @@ def val_batch(batch_num, b, evaluator, thrs=(20, 50, 100)):
         )
 
 
-evaluator = BasicSc
+evaluator = BasicSceneGraphEvaluator.all_modes(multiple_preds=False)#conf.multi_pred
+if conf.cache is not None and os.path.exists(conf.cache):
+    print("Found {}! Loading from it".format(conf.cache))
+    with open(conf.cache,'rb') as f:
+        all_pred_entries = pkl.load(f)
+    for i, pred_entry in enumerate(tqdm(all_pred_entries)):
+        gt_entry = {
+            'gt_classes': val.gt_classes[i].copy(),
+            'gt_relations': val.relationships[i].copy(),
+            'gt_boxes': val.gt_boxes[i].copy(),
+        }
+        evaluator[conf.mode].evaluate_scene_graph_entry(
+            gt_entry,
+            pred_entry,
+        )
+    evaluator[conf.mode].print_stats()
+else:
+    detector.eval()
+    for val_b, batch in enumerate(tqdm(val_loader)):
+        val_batch(conf.num_gpus*val_b, batch, evaluator)
+
+    evaluator[conf.mode].print_stats()
+
+    if conf.cache is not None:
+        with open(conf.cache,'wb') as f:
+            pkl.dump(all_pred_entries, f)
