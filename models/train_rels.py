@@ -86,4 +86,93 @@ def train_epoch(epoch_num):
 
             time_per_batch = (time.time() - start) / conf.print_interval
             print("\ne{:2d}b{:5d}/{:5d} {:.3f}s/batch, {:.1f}m/epoch".format(
-                epoch_num, b, len(train_loader), time_per_batch, len(train_loader) * time_per_batc
+                epoch_num, b, len(train_loader), time_per_batch, len(train_loader) * time_per_batch / 60))
+            print(mn)
+            print('-----------', flush=True)
+            start = time.time()
+
+
+    return pd.concat(tr, axis=1)
+
+def train_batch(b, verbose=False):
+    """
+    :param b: contains:
+          :param imgs: the image, [batch_size, 3, IM_SIZE, IM_SIZE]
+          :param all_anchors: [num_anchors, 4] the boxes of all anchors that we'll be using
+          :param all_anchor_inds: [num_anchors, 2.0] array of the indices into the concatenated
+                                  RPN feature vector that give us all_anchors,
+                                  each one (img_ind, fpn_idx)
+          :param im_sizes: a [batch_size, 4] numpy array of (h, w, scale, num_good_anchors) for each image.
+
+          :param num_anchors_per_img: int, number of anchors in total over the feature pyramid per img
+
+          Training parameters:
+          :param train_anchor_inds: a [num_train, 5] array of indices for the anchors that will
+                                    be used to compute the training loss (img_ind, fpn_idx)
+          :param gt_boxes: [num_gt, 4] GT boxes over the batch.
+          :param gt_classes: [num_gt, 2.0] gt boxes where each one is (img_id, class)
+    :return:
+    """
+
+    optimizer.zero_grad()
+    result = detector[b]
+    losses = {}
+    losses['class_loss'] = F.cross_entropy(result.rm_obj_dists, result.rm_obj_labels)
+    losses['rel_loss'] = F.cross_entropy(result.rel_dists, result.rel_labels[:, -1])
+    loss = sum(losses.values())
+    loss.backward()
+
+    losses['total'] = loss
+    optimizer.step()
+    res = pd.Series({x: y.item() for x, y in losses.items()})
+    return res
+
+def val_epoch():
+    detector.eval()
+    evaluator = BasicSceneGraphEvaluator.all_modes()
+    for val_b, batch in enumerate(val_loader):
+        val_batch(conf.num_gpus * val_b, batch, evaluator)
+    evaluator[conf.mode].print_stats()
+    return np.mean(evaluator[conf.mode].result_dict[conf.mode + '_recall'][50])
+
+def val_batch(batch_num, b, evaluator):
+    with torch.no_grad():
+        det_res = detector[b]
+        if conf.num_gpus == 1:
+            det_res = [det_res]
+
+        for i, (boxes_i, objs_i, obj_scores_i, rels_i, pred_scores_i) in enumerate(det_res):
+            gt_entry = {
+                'gt_classes': val.gt_classes[batch_num + i].copy(),
+                'gt_relations': val.relationships[batch_num + i].copy(),
+                'gt_boxes': val.gt_boxes[batch_num + i].copy(),
+            }
+            assert np.all(objs_i[rels_i[:, 0]] > 0) and np.all(objs_i[rels_i[:, 1]] > 0)
+
+            pred_entry = {
+                'pred_boxes': boxes_i * BOX_SCALE/IM_SCALE,
+                'pred_classes': objs_i,
+                'pred_rel_inds': rels_i,
+                'obj_scores': obj_scores_i,
+                'rel_scores': pred_scores_i,  # hack for now.
+            }
+
+            evaluator[conf.mode].evaluate_scene_graph_entry(
+                gt_entry,
+                pred_entry,
+            )
+
+print("Training starts now!")
+optimizer, scheduler = get_optim(conf.lr * conf.num_gpus * conf.batch_size)
+for epoch in range(start_epoch + 1, start_epoch + 1 + conf.num_epochs):
+
+    rez = train_epoch(epoch)
+    print("overall{:2d}: ({:.3f})\n{}".format(epoch, rez.mean(1)['total'], rez.mean(1)), flush=True)
+
+    mAp = val_epoch()
+    print("overall{:2d}: ({:.3f})\n{}".format(epoch, rez.mean(1)['total'], rez.mean(1)), flush=True)
+    if conf.save_dir is not None:
+        torch.save({
+            'epoch': epoch,
+            'state_dict': detector.state_dict()}, os.path.join(conf.save_dir, '{}-{}-{:.4f}.tar'.format('vgrel', epoch, mAp)))
+    scheduler.step(mAp)
