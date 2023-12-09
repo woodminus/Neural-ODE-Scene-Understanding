@@ -185,4 +185,64 @@ def val_batch(batch_num, b, evaluator, thrs=(20, 50, 100)):
         edges[(head_name, tail_name)] = train.ind_to_predicates[fiveple[4]]
 
     gt_5ples = np.column_stack((gt_entry['gt_relations'][:, :2],
-                                gt_entry['gt_classes'][gt_entr
+                                gt_entry['gt_classes'][gt_entry['gt_relations'][:, 0]],
+                                gt_entry['gt_classes'][gt_entry['gt_relations'][:, 1]],
+                                gt_entry['gt_relations'][:, 2],
+                                ))
+    has_match = reduce(np.union1d, pred_to_gt)
+    for gt in gt_5ples[np.setdiff1d(np.arange(gt_5ples.shape[0]), has_match)]:
+        # Head and tail
+        namez = []
+        for i in range(2):
+            matching_obj = np.where(objs_match[:, gt[i]])[0]
+            if matching_obj.size > 0:
+                name = query_pred(matching_obj[0])
+            else:
+                name = query_gt(gt[i])
+            namez.append(name)
+
+        missededges[tuple(namez)] = train.ind_to_predicates[gt[4]]
+
+    for fiveple in pred_5ples[np.setdiff1d(np.arange(pred_5ples.shape[0]), matching_pred5ples)]:
+
+        if fiveple[0] in pred_ind2name:
+            if fiveple[1] in pred_ind2name:
+                badedges[(pred_ind2name[fiveple[0]], pred_ind2name[fiveple[1]])] = train.ind_to_predicates[fiveple[4]]
+
+    theimg = load_unscaled(val.filenames[batch_num])
+    theimg2 = theimg.copy()
+    draw2 = ImageDraw.Draw(theimg2)
+
+    # Fix the names
+
+    for pred_ind in pred_ind2name.keys():
+        draw2 = draw_box(draw2, pred_entry['pred_boxes'][pred_ind],
+                         cls_ind=objs_i[pred_ind],
+                         text_str=pred_ind2name[pred_ind])
+    for gt_ind in gt_ind2name.keys():
+        draw2 = draw_box(draw2, gt_entry['gt_boxes'][gt_ind],
+                         cls_ind=gt_entry['gt_classes'][gt_ind],
+                         text_str=gt_ind2name[gt_ind])
+
+    recall = int(100 * len(reduce(np.union1d, pred_to_gt)) / gt_entry['gt_relations'].shape[0])
+
+    id = '{}-{}'.format(val.filenames[batch_num].split('/')[-1][:-4], recall)
+    pathname = os.path.join('/home/cong/Dokumente/nobackup/visualization1/t_2.5/', id)
+    if not os.path.exists(pathname):
+        os.mkdir(pathname)
+    theimg.save(os.path.join(pathname, 'img.pdf'), quality=100, subsampling=0)
+    theimg2.save(os.path.join(pathname, 'imgbox.pdf'), quality=100, subsampling=0)
+
+    with open(os.path.join(pathname, 'shit.txt'), 'w') as f:
+        f.write('good:\n')
+        for (o1, o2), p in edges.items():
+            f.write('{} - {} - {}\n'.format(o1, p, o2))
+        f.write('fn:\n')
+        for (o1, o2), p in missededges.items():
+            f.write('{} - {} - {}\n'.format(o1, p, o2))
+        f.write('shit:\n')
+        for (o1, o2), p in badedges.items():
+            f.write('{} - {} - {}\n'.format(o1, p, o2))
+
+
+mAp = val_epoch()
